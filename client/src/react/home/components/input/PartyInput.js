@@ -6,7 +6,6 @@ import { join } from "../../HomeLogic"
 export default function PartyInput(props) {
 
     const dispatch = useDispatch()
-    let peerConnected = useSelector(state => state.util.peerConnected)
 
 
     return <HomeFormInput
@@ -14,7 +13,7 @@ export default function PartyInput(props) {
         type="text"
         placeholder="Enter party code"
         onChange={props.onChange}
-        onEnter={() => join(props.party, dispatch, peerConnected)}
+        onEnter={() => join(props.party, dispatch)}
     />
 
 }

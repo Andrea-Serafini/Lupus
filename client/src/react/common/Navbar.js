@@ -1,8 +1,8 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux"
 
-import logo from "../../img/logo-lupus.png"
-import logoMobile from "../../img/logo-lupus-small.png"
+import logo from "../../img/LUPUS_LOGO.svg"
+import logoMobile from "../../img/LUPUS_LOGO_MOBILE.svg"
 import { Navbar, Container, NavDropdown } from "react-bootstrap"
 import { logout } from "../../socket/socket";
 
@@ -20,7 +20,7 @@ export default function MyNavbar(props) {
         <Container style={{ paddingLeft: "0px", marginRight: "0px", marginLeft: "0px", maxWidth: "100%" }}>
           <Navbar.Brand className="mr-0" >
             <img className="d-none d-md-inline" style={{ height: 50 }} alt="logo" src={logo} />
-            <img className="d-inline d-md-none" style={{ width: 25 + '%' }} alt="logoMobile" src={logoMobile} />
+            <img className="d-inline d-md-none" style={{  height: 50 }} alt="logoMobile" src={logoMobile} />
           </Navbar.Brand>
           <Navbar.Toggle />
           <Navbar.Collapse className="justify-content-end">

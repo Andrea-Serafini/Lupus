@@ -16,7 +16,7 @@ export default function LupusRouter() {
       <Routes>
         <Route exact path="/" element={<Authentication />} />
         <Route path="/lobby" element={<><Lobby /></>} />
-        <Route path="/game" element={<><Navbar display={"none"} /><Game /></>} />
+        <Route path="/game" element={<><Game /></>} />
         <Route path='*' element={<NotFound />} />
       </Routes>
     </div>
@@ -29,7 +29,7 @@ export function NotFound() {
       <Navbar display={"none"} />
       <div style={{ color: "white", textAlign: "center", marginTop: "50px" }}>
         <h1>Oops! You seem to be lost.</h1>
-        <p>Click <Link to='/'>here</Link> to get back on track</p>
+        <p>Click <Link style={{color:"white"}} to='/'>here</Link> to get back on track</p>
       </div>
     </>
   )

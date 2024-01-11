@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useSelector } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import LoadingOverlay from "react-loading-overlay-ts"
 import { NotificationContainer } from "react-notifications"
 import { Container, Row, Form } from 'react-bootstrap';
@@ -9,15 +9,25 @@ import PartyInput from "./components/input/PartyInput"
 import JoinButton from "./components/buttons/JoinButton"
 import CreateButton from "./components/buttons/CreateButton"
 import Lobby from '../lobby/Lobby';
+import { Navigate } from 'react-router-dom';
+import { join } from './HomeLogic';
 
-function Home() {
+
+function Home(props) {
+   let dispatch = useDispatch()  
    let isLoading = useSelector(state => state.util.isLoading);
    let room = useSelector(state => state.user.room);
    let username = useSelector(state => state.user.username);
+   let peerConnected = useSelector(state => state.util.peerConnected)
+
+   let lobby = sessionStorage.getItem("lobby");
+   if (lobby !== null) {
+      room = lobby
+   }
 
    const [inputParty, setInputParty] = useState(undefined)
 
-   if (room === null) {
+   if (!peerConnected) { //(room === null) {
       return (
          <>
             <MyNavbar display={"block"} />
@@ -43,7 +53,8 @@ function Home() {
          </>
       );
    } else {
-      return (<Lobby />)
+      return <Navigate to="/lobby" />
+      //return (<Lobby />)
    }
 }
 

@@ -1,5 +1,16 @@
-export const SERVER_ADDRESS = "http://localhost:8080"
+import wolfCard from "../img/SVG/CARDS/LUPO_card.svg"
+import wolfIcon from "../img/SVG/ICONS/LUPO_icon.svg"
+import villagerCard from "../img/SVG/CARDS/ABITANTE_card.svg"
+import villagerIcon from "../img/SVG/ICONS/ABITANTE_icon.svg"
+import alphaCard from "../img/SVG/CARDS/LUPO_ALPHA_card.svg"
+import alphaIcon from "../img/SVG/ICONS/LUPO_ALPHA_icon.svg"
+import bodyguardCard from "../img/SVG/CARDS/BODYGUARD_card.svg"
+import bodyguardIcon from "../img/SVG/ICONS/BODYGUARD_icon.svg"
+import clairvoyantCard from "../img/SVG/CARDS/VEGGENTE_card.svg"
+import clairvoyantIcon from "../img/SVG/ICONS/VEGGENTE_icon.svg"
 
+
+export const SERVER_ADDRESS = "http://localhost:8080"
 
 //Login
 export const USERNAME_MIN_LENGTH = 4
@@ -26,7 +37,7 @@ export const sleep = (milliseconds) => {
 }
 
 
-export const FILTERS_NUM = 20
+export const FILTERS_NUM = 21
 
 export const FILTERS = {
     1: "invert(52%) sepia(80%) saturate(1375%) hue-rotate(79deg) brightness(116%) contrast(127%)", // yellow
@@ -50,3 +61,56 @@ export const FILTERS = {
     19: "invert(25%) sepia(99%) saturate(3886%) hue-rotate(85deg) brightness(103%) contrast(104%)", // light red
     20: "invert(21%) sepia(72%) saturate(7467%) hue-rotate(358deg) brightness(105%) contrast(121%)", // light purple
 }
+
+
+//Game
+export const MIN_PLAYERS = 3 //8
+export const WOLF_STD_NUM = 1 //3
+
+export const ROLES = {
+    1: "Wolf",
+    2: "Villager"
+}
+export const ROLES_INDEX = {
+    "Wolf": 1,
+    "Villager": 2
+}
+export const ROLES_ICONS = {
+    1: wolfIcon,
+    2: villagerIcon
+}
+export const ROLES_CARDS = {
+    1: wolfCard,
+    2: villagerCard
+}
+
+export const EXTRAS = {
+    1: "Alpha Wolf",
+    2: "Bodyguard",
+    3: "Clairvoyant"
+}
+export const EXTRAS_INDEX = {
+    "Alpha Wolf": 1,
+    "Bodyguard": 2,
+    "Clairvoyant": 3
+}
+export const EXTRAS_ICONS = {
+    1: alphaIcon,
+    2: bodyguardIcon,
+    3: clairvoyantIcon
+}
+export const EXTRAS_CARDS = {
+    1: alphaCard,
+    2: bodyguardCard,
+    3: clairvoyantCard
+}
+
+export const CARDS = {
+    "Wolf": wolfCard,
+    "Villager": villagerCard,
+    "Alpha Wolf": alphaCard,
+    "Bodyguard": bodyguardCard,
+    "Clairvoyant": clairvoyantCard
+}
+
+

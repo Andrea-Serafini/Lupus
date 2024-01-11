@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import Login from "../login/Login";
 import Home from "../home/Home";
-import { connect, socket } from "../../socket/socket"
+import { connect } from "../../socket/socket"
 
 export default function Authentication() {
 
@@ -13,7 +13,7 @@ export default function Authentication() {
     let dispatch = useDispatch();
 
     if (sessionID === null) {
-        return(<Login />)
+        return (<Login />)
     } else {
         if (!socketConnected) {
             connect(dispatch);

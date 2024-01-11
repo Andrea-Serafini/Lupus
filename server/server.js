@@ -72,7 +72,7 @@ io.use((socket, next) => {
     }
     //Create new session
     socket.sessionID = randomId();
-    console.log("SOCKET: " + socket.id + " - generated new sessionID: " + socket.sessionID);
+    //console.log("SOCKET: " + socket.id + " - generated new sessionID: " + socket.sessionID);
     next();
 });
 
@@ -87,10 +87,10 @@ function goLive() {
     //On connection assign handlers
     io.on('connection', (socket) => {
 
-        console.log("SOCKET: " + socket.id + " - connected with sessionID: " + socket.sessionID);
+        //console.log("SOCKET: " + socket.id + " - connected with sessionID: " + socket.sessionID);
 
         socket.on('disconnect', () => {
-            console.log(`SOCKET: ${socket.id} - disconnected`);
+            //console.log(`SOCKET: ${socket.id} - disconnected`);
             let session = sessionStore.findSession(socket.sessionID);
             if (session) {
                 console.log("USER: " + session.username + " - disconnected");
@@ -106,17 +106,20 @@ function goLive() {
 
         socket.on('logout', () => {
             let session = sessionStore.findSession(socket.sessionID);
-            if (session) console.log("USER: " + session.username + " - logout");
+            if (session) {
+                console.log("USER: " + session.username + " - logout");
+                sessionStore.deleteSession(socket.sessionID);
 
-            sessionStore.deleteSession(socket.sessionID);
+            }
+
         });
 
         socket.on('login', (message) => {
 
-            User.findOne({ username: message.name })
+            User.findOne({ username: message.username })
                 .then(function (dbUser) {
                     if (dbUser != null) {
-                        if (!userAlreadyLogged(message.name)) {
+                        if (!userAlreadyLogged(message.username)) {
                             checkPassword(dbUser, socket, message);
                         } else {
                             socket.emit("login_error", "User already logged");
@@ -132,13 +135,13 @@ function goLive() {
 
         socket.on('signup', (message) => {
 
-            User.findOne({ username: message.name })
+            User.findOne({ username: message.username })
                 .then(function (dbUser) {
                     if (dbUser != null) {
                         socket.emit("signup_error", "Username already taken");
                     } else {
                         var newUser = new User({
-                            username: message.name,
+                            username: message.username,
                             password: message.password
                         });
 
@@ -160,48 +163,73 @@ function goLive() {
 
         socket.on('room', (message) => {
 
-            console.log("Peer " + socket.sessionID + " joined room " + JSON.stringify(message.name));
 
             var room = rooms.filter(function (room) { return room.name === message.name })[0];
+
             if (!room) {
                 room = { name: message.name, players: [], closed: false };
                 rooms.push(room);
             }
+            if (!room.closed) {
+                socket.join(room.name)
 
-            socket.join(room.name)
+                const session = sessionStore.findSession(socket.sessionID);
+                if (session) {
+                    socket.emit("room", { name: room.name, username: session.username, peerID: message.peerID })
+                    let player = { peerID: message.peerID, username: session.username };
+                    console.log("USER: " + session.username + " - joined room " + room.name);
 
-            const session = sessionStore.findSession(socket.sessionID);
+                    room.players.forEach((p) => {
+                        socket.emit("new_peer", p);
+                    })
 
-            //non dovrebbe più servire perchè viene rimosso on disconnect
-            /*
-            //remove if already present
-            let removedPlayers = room.players.filter(function (player) { return player.username !== session.username })
-            let oldPlayer = room.players.filter(function (player) { return player.username == session.username })
+                    room.players.push(player)
+                    socket.broadcast.to(room.name).emit("new_peer", player);
+                }
+            } else if (room.closed) {
+                const session = sessionStore.findSession(socket.sessionID);
+                if (session) {
+                    let exPlayer = room.players.filter(function (player) { return player.username == session.username && player.peerID == null })[0]
+                    if (exPlayer) {
+                        socket.join(room.name)
 
-            if (removedPlayers.length != room.players.length) {
-                room.players = removedPlayers
+                        socket.emit("restore_room", { name: room.name, username: session.username, peerID: message.peerID })
+                        let player = { peerID: message.peerID, username: session.username };
+                        console.log("USER: " + session.username + " - rejoined room " + room.name);
 
-                console.log(oldPlayer)
+                        let newPlayers = room.players.filter(function (player) { return player.username !== session.username })
+                        room.players = newPlayers
 
-                socket.broadcast.to(room.name).emit("peer_removed", oldPlayer.peerID);
+                        room.players.forEach((p) => {
+                            socket.emit("new_peer", p);
+                        })
+
+                        room.players.push(player)
+                        socket.broadcast.to(room.name).emit("restore_peer", player);
+                    } else {
+                        socket.emit("room_unavailable")
+                    }
+                }
             }
-            */
-            
-            room.players.forEach((p) => {
-                socket.emit("new_peer", p);
-            })
+        });
 
+        socket.on('close_room', (message) => {
 
-            player = { peerID: message.id, username: session.username };
-            room.players.push(player)
-            socket.emit("room", room.name)
-            socket.broadcast.to(room.name).emit("new_peer", message.id);
+            var spliceIndex;
+            var room = rooms.filter(function (room, index) { if (room.name === message) { spliceIndex = index; return true; } })[0];
+
+            if (room) {
+                console.log("ROOM: " + message + " - closed")
+                room.closed = true;
+                rooms.splice(spliceIndex, 1, room);
+                io.to(room.name).emit("room_closed");
+            }
 
         });
 
         socket.on('peer_destroyed', (message) => {
-            console.log("PEER: " + message.id + " - destroyed ");
-            removePeerIDFromRoom(message.id, socket)
+            //console.log("PEER: " + message.id + " - destroyed ");
+            removePeerIDFromRoom(message.peerId, socket)
         });
     });
 }
@@ -214,12 +242,13 @@ function checkPassword(dbUser, socket, message) {
             if (isMatch) {
                 socket.emit("session", {
                     sessionID: socket.sessionID,
-                    username: message.name
+                    username: message.username
                 });
                 sessionStore.saveSession(socket.sessionID, {
                     connected: true,
-                    username: message.name
+                    username: message.username
                 });
+                console.log("USER: " + message.username + " - connected");
 
             } else {
                 socket.emit("login_error", "Wrong password");
@@ -241,19 +270,20 @@ function userAlreadyLogged(username) {
 //Given a username if the room is still open it will be removed,
 //if the room is closed the peerID will be deleted but the username kept to enable the reconnection during the game
 function removeUsernameFromRoom(username, socket) {
-    console.log("USER: " + username + " - removed from room");
 
     rooms.forEach((room) => {
         let newPlayers = room.players.filter(function (player) { return player.username !== username })
         let removedPlayer = room.players.filter(function (player) { return player.username == username })[0]
 
         if (newPlayers.length != room.players.length) {
-            socket.broadcast.to(room.name).emit("peer_removed", removedPlayer.peerID);
+            console.log("USER: " + username + " - removed from room " + room.name);
+            //socket.broadcast.to(room.name).emit("peer_removed", removedPlayer.peerID);
             if (room.closed) {
                 removedPlayer.peerID = null
                 newPlayers.push(removedPlayer)
             }
             room.players = newPlayers
+            socket.leave(room.name)
 
         }
     })
@@ -261,16 +291,25 @@ function removeUsernameFromRoom(username, socket) {
 
 //Given a peerID the player will be deleted from the room
 function removePeerIDFromRoom(id, socket) {
-    rooms.forEach((room) => {
-        let newPlayers = room.players.filter(function (player) { return player.peerID !== message.id })
-        let removedPlayer = room.players.filter(function (player) { return player.username == id })[0]
-
+    rooms.forEach((room, index, list) => {
+        let newPlayers = room.players.filter(function (player) { return player.peerID !== id })
+        let removedPlayer = room.players.filter(function (player) { return player.peerID == id })[0]
         if (newPlayers.length != room.players.length) {
+            console.log("USER: " + removedPlayer.username + " - left room " + room.name);
+            if (room.closed) {
+                removedPlayer.peerID = null
+                newPlayers.push(removedPlayer)
+            }
             room.players = newPlayers
-            console.log("USER: " + removedPlayer.username + " - removed from room");
-            socket.broadcast.to(room.name).emit("peer_removed", message.id);
+            socket.broadcast.to(room.name).emit("peer_removed", id);
+            socket.leave(room.name)
+            if (room.players.filter(function (player) { return player.peerID !== null }).length == 0) {
+                list.splice(index, 1)
+                console.log("ROOM: " + room.name + " deleted")
+            }
         }
     })
+
 }
 
 

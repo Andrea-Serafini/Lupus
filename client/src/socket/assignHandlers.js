@@ -1,10 +1,12 @@
 import { setRoom, setToken, setUsername } from "../redux/user/reducer";
-import { setIsLoading } from "../redux/util/reducer";
+import { setIsLoading, setPeerConnected } from "../redux/util/reducer";
+import { addPlayer, setPartyClosed } from "../redux/game/reducer";
 import { NotificationManager } from "react-notifications";
 import "react-notifications/lib/notifications.css"
 import { logout } from "./socket";
 import { sleep } from "../util/config";
-import { connectPeer, disconnectPeer } from "../peer/Peer";
+import { connectPeer, createUser, disconnectPeer } from "../peer/Peer";
+import { useSelector } from "react-redux";
 
 
 export function assignHandlers(socket, dispatch) {
@@ -50,22 +52,61 @@ export function assignHandlers(socket, dispatch) {
     });
 
     socket.on("room", (message) => {
-        console.log("Entered room " + message)
-        dispatch(setRoom(message))
+        console.log("Entered room " + message.name)
+        sessionStorage.setItem("lobby", message.name);
+        dispatch(addPlayer(createUser(message.username, message.peerID)))
+        dispatch(setRoom(message.name))
+        dispatch(setPeerConnected(true))
+        dispatch(setIsLoading(false))
+
     });
 
+    socket.on("restore_room", (message) => {
+        console.log("Entered room " + message.name)
+        sessionStorage.setItem("lobby", message.name);
+        dispatch(addPlayer(createUser(message.username, message.peerID)))
+        dispatch(setRoom(message.name))
+        dispatch(setPeerConnected(true))
+        dispatch(setIsLoading(false))
+        dispatch(setPartyClosed(true))
+
+    });
+
+
+
     socket.on("new_peer", (message) => {
-        console.log("new_peer")
-        connectPeer(message)
-        console.log(message)
+        console.log("new_peer: " + message.peerID)
+        connectPeer(dispatch, message)
+
+    });
+
+    socket.on("restore_peer", (message) => {
+        console.log("restore_peer: " + message.peerID)
+        connectPeer(dispatch, message)
+
     });
 
     socket.on("peer_removed", (message) => {
         console.log("peer_removed")
-        disconnectPeer(message)
+        disconnectPeer(dispatch, message)
         console.log(message)
     });
-    
+
+    socket.on("room_closed", () => {
+        dispatch(setIsLoading(false))
+        dispatch(setPartyClosed(true))
+        console.log("room_closed")
+    });
+
+    socket.on("room_unavailable", () => {
+        dispatch(setIsLoading(false))
+        dispatch(setRoom(null))
+        dispatch(setPartyClosed(false))
+        NotificationManager.error("Try a different code", 'Room closed', 3000);
+
+    });
+
+
 }
 
 async function connectionErrorHandler(error, socket, dispatch) {

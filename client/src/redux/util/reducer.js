@@ -3,7 +3,8 @@ import { createSlice } from '@reduxjs/toolkit'
 var initialState = {
     socketConnected: false,
     peerConnected: false,
-    isLoading: false
+    isLoading: false,
+    cardVisible: false 
 }
 
 const utilSlice = createSlice({
@@ -19,8 +20,11 @@ const utilSlice = createSlice({
         setIsLoading(state, action) {
             state.isLoading = action.payload
         },
+        setCardVisible(state, action) {
+            state.cardVisible = action.payload
+        },
     },
 })
 
-export const { setSocketConnected, setPeerConnected, setIsLoading } = utilSlice.actions
+export const { setSocketConnected, setPeerConnected, setIsLoading, setCardVisible } = utilSlice.actions
 export default utilSlice.reducer

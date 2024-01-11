@@ -28,6 +28,7 @@ export default function CredentialsForm(props) {
    function clearState() {
       setInputUsername("");
       setInputPassword("");
+      document.getElementById("loginForm").reset();
    }
 
    if (token === null) {
@@ -41,7 +42,7 @@ export default function CredentialsForm(props) {
                      <div className="mx-auto pt-5 text-center col-lg-6 col-9"><h2 style={{ color: "white" }}>Login</h2></div>
                      <Row className="d-flex justify-content-center">
                         <div className="my-1 container col-lg-6 col-9 rounded trnsp">
-                           <Form className="mt-1 mb-3">
+                           <Form id='loginForm' className="mt-1 mb-3">
                               <UsernameInput username={inputUsername} password={inputPassword} onChange={input => setInputUsername(input)} cb={() => clearState()} />
                               <PasswordInput username={inputUsername} password={inputPassword} onChange={input => setInputPassword(input)} cb={() => clearState()} />
                               <div>

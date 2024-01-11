@@ -5,9 +5,8 @@ import { join } from "../../HomeLogic"
 
 export default function SignupButton(props) {
     const dispatch = useDispatch()
-    let peerConnected = useSelector(state => state.util.peerConnected)
 
     return <HomeFormButton text="Create" variant="secondary"
-        onClick={() => join(props.party, dispatch, peerConnected)}
+        onClick={() => join(props.party, dispatch)}
     />
 }

@@ -2,13 +2,13 @@ import { NotificationManager } from "react-notifications"
 
 import { PARTY_MIN_LENGTH, PARTY_MAX_LENGTH } from "../../util/config"
 import { createPeer } from "../../peer/Peer"
-import { setIsLoading } from "../../redux/util/reducer"
+import { setIsLoading, setPeerConnected } from "../../redux/util/reducer"
 import { socket } from "../../socket/socket";
 
-export function join(inputParty, dispatch, peerConnected) {
+export function join(inputParty, dispatch) {
     if (isPartynameValid(inputParty)) {
         dispatch(setIsLoading(true));
-        createPeer(dispatch, socket, inputParty)
+        createPeer(socket, inputParty, dispatch)
         console.log("Join " + inputParty)
     } else {
         NotificationManager.error("Room name need to be between 6 and 12 characters", "Invalid name", 3000)

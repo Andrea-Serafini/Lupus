@@ -30,7 +30,7 @@ export function login(inputUsername, inputPassword, dispatch, socketConnected, c
                 connect(dispatch);
             }
             //dispatch(setUsername(inputUsername));
-            socket.emit('login', { name: inputUsername, password: inputPassword });
+            socket.emit('login', { username: inputUsername, password: inputPassword });
 
         } else {
             NotificationManager.error("Something is wrong with the password, please try again.", 'Invalid Password', 3000);
@@ -47,7 +47,7 @@ export function signup(inputUsername, inputPassword, dispatch, socketConnected) 
             if (!socketConnected) {
                 connect(dispatch);
             }
-            socket.emit('signup', { name: inputUsername, password: inputPassword });
+            socket.emit('signup', { username: inputUsername, password: inputPassword });
 
         } else {
             printPasswordValidationErrors(inputPassword)
