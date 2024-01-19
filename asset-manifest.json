@@ -1,0 +1,33 @@
+{
+  "files": {
+    "main.css": "/Lupus/static/css/main.c6bdf76a.css",
+    "main.js": "/Lupus/static/js/main.060714c8.js",
+    "static/media/VEGGENTE_card.svg": "/Lupus/static/media/VEGGENTE_card.2647d3ca73d8804aa7b21a08f485f714.svg",
+    "static/media/VEGGENTE_icon.svg": "/Lupus/static/media/VEGGENTE_icon.8801557fe0c463bdfc294d44719600f2.svg",
+    "static/media/LUPUS_LOGO.svg": "/Lupus/static/media/LUPUS_LOGO.63d53925feaf799827a09606c5f1b193.svg",
+    "static/media/LUPUS_LOGO_MOBILE.svg": "/Lupus/static/media/LUPUS_LOGO_MOBILE.0ddc7a0b2525589c4146f394b9b3d4d5.svg",
+    "static/media/LUPO_ALPHA_card.svg": "/Lupus/static/media/LUPO_ALPHA_card.d7d8fcd9b7aefefcae30a3672ef6cf90.svg",
+    "static/media/ABITANTE_icon.svg": "/Lupus/static/media/ABITANTE_icon.bfa14ea4b90ab4a0f869386b486b62ab.svg",
+    "static/media/ABITANTE_card.svg": "/Lupus/static/media/ABITANTE_card.58a1fdeef25683903bc1d8af27624464.svg",
+    "static/media/LUPO_card.svg": "/Lupus/static/media/LUPO_card.03bf89ba2ca04a87ee2a7f6247e74986.svg",
+    "static/media/BODYGUARD_card.svg": "/Lupus/static/media/BODYGUARD_card.54b3569f60be142a8feff4f57eacfa04.svg",
+    "static/media/BODYGUARD_icon.svg": "/Lupus/static/media/BODYGUARD_icon.8371e7477a54c6945e259d95bb12e45d.svg",
+    "static/media/RETRO_card.svg": "/Lupus/static/media/RETRO_card.56ce537c77d33e89f8c4c0b56f0d6270.svg",
+    "static/media/LUPO_ALPHA_icon.svg": "/Lupus/static/media/LUPO_ALPHA_icon.3212c62fd0076055531153da1667be4b.svg",
+    "static/media/LUPO_icon.svg": "/Lupus/static/media/LUPO_icon.518fb8c9bb9c766c1efc699314c4bd1a.svg",
+    "static/media/background.svg": "/Lupus/static/media/background.896e33c366c5acacb58e.svg",
+    "static/media/notification.svg?s3g3t9": "/Lupus/static/media/notification.5d0158671dd860c714c4.svg",
+    "static/media/notification.eot": "/Lupus/static/media/notification.3657084dc0419605a91c.eot",
+    "static/media/notification.woff?s3g3t9": "/Lupus/static/media/notification.c392cd33d9d9de730f9d.woff",
+    "static/media/notification.ttf?s3g3t9": "/Lupus/static/media/notification.c5d9251ea82e42f75381.ttf",
+    "static/media/ghost-solid.svg": "/Lupus/static/media/ghost-solid.88f2e77b4b957a04c0e72f8beacc1739.svg",
+    "index.html": "/Lupus/index.html",
+    "static/media/ale.svg": "/Lupus/static/media/ale.27effff30f190111d418c27542e4ee85.svg",
+    "main.c6bdf76a.css.map": "/Lupus/static/css/main.c6bdf76a.css.map",
+    "main.060714c8.js.map": "/Lupus/static/js/main.060714c8.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.c6bdf76a.css",
+    "static/js/main.060714c8.js"
+  ]
+}
