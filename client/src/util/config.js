@@ -10,7 +10,7 @@ import clairvoyantCard from "../img/SVG/CARDS/VEGGENTE_card.svg"
 import clairvoyantIcon from "../img/SVG/ICONS/VEGGENTE_icon.svg"
 
 
-export const SERVER_ADDRESS = "http://localhost:8080"
+export const SERVER_ADDRESS = "https://wise-resolved-wasp.ngrok-free.app" //"http://localhost:8080"
 
 //Login
 export const USERNAME_MIN_LENGTH = 4

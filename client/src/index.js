@@ -3,7 +3,7 @@ import { createRoot } from 'react-dom/client';
 import './index.css';
 import "bootstrap/dist/css/bootstrap.css";
 import LupusRouter from './react/common/LupusRouter';
-import { BrowserRouter } from "react-router-dom";
+import { BrowserRouter, HashRouter } from "react-router-dom";
 import { Provider } from "react-redux";
 import store from "./redux/store";
 
@@ -14,9 +14,9 @@ const root = createRoot(container);
 root.render(
   <Provider store={store}>
     <React.Fragment>
-      <BrowserRouter>
+      <HashRouter>
         <LupusRouter />
-      </BrowserRouter>
+      </HashRouter>
     </React.Fragment>
   </Provider>
 );

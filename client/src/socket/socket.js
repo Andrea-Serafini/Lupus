@@ -13,6 +13,9 @@ export const socket = io(SERVER_ADDRESS, {
 
 export function connect(dispatch) {
 
+    console.log(SERVER_ADDRESS)
+    console.log("SERVER_ADDRESS")
+
     const sessionID = sessionStorage.getItem("sessionID");
     if (sessionID) {
         socket.auth = { sessionID };

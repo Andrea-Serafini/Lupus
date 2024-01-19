@@ -110,6 +110,7 @@ export function assignHandlers(socket, dispatch) {
 }
 
 async function connectionErrorHandler(error, socket, dispatch) {
+    console.log(error)
     NotificationManager.error("Connection to server lost, retry later", 'Error', 3000)
     await sleep(3000).then(() => logout(dispatch))
     dispatch(setIsLoading(false));
