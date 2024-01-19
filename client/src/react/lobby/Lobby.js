@@ -15,17 +15,22 @@ import { Navigate } from "react-router-dom";
 import { join } from "../home/HomeLogic";
 import { connect } from "../../socket/socket";
 import { setRoom } from "../../redux/user/reducer";
+import RejoinButton from "./components/buttons/RejoinButton";
 
 function Lobby() {
    let isLoading = useSelector(state => state.util.isLoading);
    let room = useSelector(state => state.user.room);
+   let username = useSelector(state => state.user.username);
    let gamePhase = useSelector(state => state.game.phase);
    let playersList = useSelector(state => state.game.players);
+   let myPlayer = playersList.filter((player) => player.username === username)[0]
    let partyClosed = useSelector(state => state.game.partyClosed);
    let peerConnected = useSelector(state => state.util.peerConnected)
    let socketConnected = useSelector(state => state.util.socketConnected)
-   let wolfNumber = useSelector(state => state.options.wolfNumber);
-   let extras = useSelector(state => state.options.extras);
+   let wolfNumberOptions = useSelector(state => state.options.wolfNumber);
+   let extrasOptions = useSelector(state => state.options.extras);
+   let wolfNumber = useSelector(state => state.game.wolfNumber);
+   let extras = useSelector(state => state.game.extras);
    let sessionID = sessionStorage.getItem("sessionID");
    let dispatch = useDispatch()
 
@@ -35,9 +40,7 @@ function Lobby() {
 
    if (sessionID === null) {
       return <Navigate to="/" />
-   }
-
-   if (gamePhase !== null) {
+   } else if (gamePhase !== null && imOnline(myPlayer)) {
       return <Navigate to="/game" />
    }
 
@@ -57,7 +60,7 @@ function Lobby() {
    if (room !== null && !peerConnected) {
       return (
          <>
-            <MyNavbar display={"block"} />
+            <MyNavbar display={"block"} inGame={"none"}/>
             <LoadingOverlay active={true} spinner text='Reloading the lobby...'>
                <div role="main" style={{ height: "300px" }}>
                </div>
@@ -69,7 +72,7 @@ function Lobby() {
    } else {
       return (
          <>
-            <MyNavbar display={"block"} />
+            <MyNavbar display={"block"} inGame={"none"}/>
             <LoadingOverlay active={isLoading} spinner text='Starting the game...'>
                <div role="main">
                   <NotificationContainer />
@@ -80,7 +83,7 @@ function Lobby() {
                         <div className="my-1 pt-2 container col-lg-6 col-9 rounded trnsp">
                            <div className="d-lg-flex px-3 pt-3 pb-2 rounded justify-content-around flex-wrap trnsp2" >
                               {playersList.map((player, index) => (
-                                 <div key={index} className="rounded bg-white col-lg-5 mb-2 d-flex align-items-center" style={{ height: "40px"}}>
+                                 <div key={index} className="rounded bg-white col-lg-5 mb-2 d-flex align-items-center" style={{ height: "40px" }}>
                                     <div className="m-auto text-center">
                                        {player.username}
                                     </div>
@@ -88,9 +91,24 @@ function Lobby() {
                               ))}
                            </div>
                            <div className="mb-3">
-                              {partyClosed
-                                 ? <><PlayButton extras={extras} wolfNumber={wolfNumber} players={playersList}/><OptionButton handleShow={handleShow} /><OptionModal maxWolf={playersList.length - 1} show={show} handleClose={handleClose} /><LeaveButton /></>
-                                 : <><CloseButton roomName={room} numPlayers={playersList.length} /><LeaveButton /></>
+                              {partyClosed ?
+                                 <>
+                                    {wasOnline(myPlayer) ?
+                                       <RejoinButton players={playersList} username={username} />
+                                       :
+                                       <>
+                                          <PlayButton extras={extras} wolfNumber={wolfNumber} players={playersList} />
+                                          <OptionButton handleShow={handleShow} />
+                                          <OptionModal maxWolf={playersList.length - 1} show={show} handleClose={handleClose} />
+                                       </>
+                                    }
+                                    <LeaveButton players={playersList} username={username} />
+                                 </>
+                                 :
+                                 <>
+                                    <CloseButton roomName={room} numPlayers={playersList.length} />
+                                    <LeaveButton players={playersList} username={username} />
+                                 </>
                               }
                            </div>
 
@@ -101,6 +119,28 @@ function Lobby() {
             </LoadingOverlay>
          </>
       );
+   }
+}
+
+function wasOnline(me) {
+   if (me) {
+      if (me.role && !me.online) {
+         return true
+      } else {
+         return false
+      }
+   } else {
+      return false
+   }
+}
+
+function imOnline(me) {
+   if (me) {
+      console.log("me is " + me.online)
+      return me.online
+   } else {
+      console.log("me is not present")
+      return false
    }
 }
 

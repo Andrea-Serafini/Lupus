@@ -1,14 +1,17 @@
 import { Modal, Button, Form, InputGroup } from "react-bootstrap"
 import { useDispatch, useSelector } from "react-redux";
-import { toggleExtras, setWolfNumber } from "../../../../redux/options/reducer";
+//import { toggleExtras, setWolfNumber } from "../../../../redux/options/reducer";
+import { toggleExtras, setWolfNumber } from "../../../../redux/game/reducer";
 import { EXTRAS_ICONS, ROLES_ICONS } from "../../../../util/config";
 import { sendMessage } from "../../../../peer/Peer";
 
 export default function OptionModal(props) {
 
-    let value = useSelector(state => state.options.wolfNumber);
     let dispatch = useDispatch();
-    let extras = useSelector(state => state.options.extras);
+    let valueOptions = useSelector(state => state.options.wolfNumber);
+    let extrasOptions = useSelector(state => state.options.extras);
+    let value = useSelector(state => state.game.wolfNumber);
+    let extras = useSelector(state => state.game.extras);
 
     function increment() {
         const max = props.maxWolf;

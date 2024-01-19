@@ -38,8 +38,8 @@ export function assignRoles(dispatch, players, wolfNumber, extras) {
     
     dispatch(setPlayers(playersList))
     sendMessage({ "players": playersList })
-    dispatch(setPhase("playing"))
-    sendMessage({ "phase": "playing" })
+    dispatch(setPhase("night"))
+    sendMessage({ "phase": "night" })
 
     let wolfHistory
     if (wolfNumber === 1) {

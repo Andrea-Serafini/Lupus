@@ -5,6 +5,7 @@ import logo from "../../img/LUPUS_LOGO.svg"
 import logoMobile from "../../img/LUPUS_LOGO_MOBILE.svg"
 import { Navbar, Container, NavDropdown } from "react-bootstrap"
 import { logout } from "../../socket/socket";
+import { leave } from "../lobby/LobbyLogic";
 
 
 // Here, we display our Navbar
@@ -12,7 +13,6 @@ export default function MyNavbar(props) {
 
   let username = useSelector(state => state.user.username);
   let dispatch = useDispatch();
-
 
   return (
     <>
@@ -26,6 +26,9 @@ export default function MyNavbar(props) {
           <Navbar.Collapse className="justify-content-end">
             <NavDropdown title={username} id="basic-nav-dropdown" style={{ color: "white", display: props.display }}>
               <NavDropdown.Item onClick={() =>logout(dispatch)}>Logout</NavDropdown.Item>
+            </NavDropdown>
+            <NavDropdown title="Leave" id="basic-nav-dropdown2" style={{ color: "white", display: props.inGame }}>
+              <NavDropdown.Item onClick={() =>leave(dispatch, props.players, props.username)}>Leave the game</NavDropdown.Item>
             </NavDropdown>
           </Navbar.Collapse>
         </Container>

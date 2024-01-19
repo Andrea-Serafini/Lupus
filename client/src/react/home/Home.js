@@ -30,7 +30,7 @@ function Home(props) {
    if (!peerConnected) { //(room === null) {
       return (
          <>
-            <MyNavbar display={"block"} />
+            <MyNavbar display={"block"} inGame={"none"}/>
             <LoadingOverlay active={isLoading} spinner text='Peer initializing...'>
                <div role="main">
                   <NotificationContainer />

@@ -34,7 +34,7 @@ export default function CredentialsForm(props) {
    if (token === null) {
       return (
          <>
-            <MyNavbar display={"none"} />
+            <MyNavbar display={"none"} inGame={"none"}/>
             <LoadingOverlay active={isLoading} spinner text='Connecting to server...'>
                <div role="main" >
                   <NotificationContainer />

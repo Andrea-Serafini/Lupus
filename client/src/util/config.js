@@ -113,4 +113,12 @@ export const CARDS = {
     "Clairvoyant": clairvoyantCard
 }
 
+export const ICONS = {
+    "Wolf": wolfIcon,
+    "Villager": villagerIcon,
+    "Alpha Wolf": alphaIcon,
+    "Bodyguard": bodyguardIcon,
+    "Clairvoyant": clairvoyantIcon
+}
+
 

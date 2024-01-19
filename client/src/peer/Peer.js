@@ -1,6 +1,7 @@
 import { Peer } from 'peerjs';
-import { addHistory, addPlayer, removePlayer, setPhase, setPlayers } from '../redux/game/reducer';
-import { setWolfNumber, toggleExtras } from '../redux/options/reducer';
+import { addHistory, addPlayer, removePlayer, setHistory, setPhase, setPlayers, updatePlayer } from '../redux/game/reducer';
+//import { setWolfNumber, toggleExtras } from '../redux/options/reducer';
+import { setWolfNumber, toggleExtras } from '../redux/game/reducer';
 
 var peerId;
 var peer;
@@ -40,14 +41,25 @@ export function handleData(data, dispatch) {
         dispatch(setPlayers(obj.players))
     } else if (obj.history) {
         dispatch(addHistory(obj.history))
+    } else if (obj.allHistory) {
+        dispatch(setHistory(obj.allHistory))
     }
-
+    
 }
 
 
 export function sendMessage(message) {
     connections.forEach((conn) => {
         conn.send(message);
+    })
+}
+
+export function sendMessageTo(peerID, message) {
+    connections.forEach((conn) => {
+        if (conn.peer === peerID) {
+            console.log("sending to " + peerID)
+            conn.send(message);
+        }
     })
 }
 
@@ -60,6 +72,25 @@ export function connectPeer(dispatch, newPeer) {
         conn.send("Hi! I'm " + peerId);
 
         dispatch(addPlayer(createUser(newPeer.username, newPeer.peerID)))
+    });
+    conn.on("close", () => {
+        console.log("Received close from peer " + conn.peer)
+        dispatch(removePlayer(conn.peer))
+        connections = connections.filter(function (conn) { return conn.open })
+
+    });
+
+    conn.on('error', function (err) { console.log(err) });
+}
+export function reconnectPeer(dispatch, newPeer) {
+
+    var conn = peer.connect(newPeer.peerID);
+
+    conn.on("open", () => {
+        connections.push(conn);
+        conn.send("Hi! I'm " + peerId);
+
+        dispatch(updatePlayer(createUser(newPeer.username, newPeer.peerID)))
     });
     conn.on("close", () => {
         console.log("Received close from peer " + conn.peer)
@@ -87,7 +118,7 @@ export function destroyPeer(socket) {
     }
 }
 
-export function createUser(username, peerID, role, alive, vote, online) {
+export function createUser(username, peerID, role, alive, vote, online = false) {
     return {
         username: username,
         peerID: peerID,

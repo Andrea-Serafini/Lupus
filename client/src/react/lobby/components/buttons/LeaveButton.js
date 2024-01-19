@@ -5,5 +5,5 @@ import { leave } from "../../LobbyLogic"
 
 export default function LeaveButton(props) {
     const dispatch = useDispatch()
-    return <LobbyButton text="Leave" variant="secondary" onClick={() => leave(dispatch)} />
+    return <LobbyButton text="Leave" variant="secondary" onClick={() => leave(dispatch, props.players, props.username)} />
 }

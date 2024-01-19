@@ -5,7 +5,7 @@ import { NotificationManager } from "react-notifications";
 import "react-notifications/lib/notifications.css"
 import { logout } from "./socket";
 import { sleep } from "../util/config";
-import { connectPeer, createUser, disconnectPeer } from "../peer/Peer";
+import { connectPeer, createUser, disconnectPeer, reconnectPeer } from "../peer/Peer";
 import { useSelector } from "react-redux";
 
 
@@ -82,7 +82,7 @@ export function assignHandlers(socket, dispatch) {
 
     socket.on("restore_peer", (message) => {
         console.log("restore_peer: " + message.peerID)
-        connectPeer(dispatch, message)
+        reconnectPeer(dispatch, message)
 
     });
 

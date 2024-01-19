@@ -5,7 +5,7 @@ import { Navigate } from "react-router-dom";
 import LoadingOverlay from "react-loading-overlay-ts"
 import { Button, Container, Row } from "react-bootstrap";
 import { NotificationContainer } from "react-notifications";
-import { CARDS } from "../../util/config";
+import { CARDS, ICONS } from "../../util/config";
 import ale from "../../img/ale.svg"
 import aleDead from "../../img/ghost-solid.svg"
 import backCard from "../../img/SVG/CARDS/RETRO_card.svg"
@@ -29,7 +29,7 @@ function Game() {
 
       return (
          <>
-            <MyNavbar display={"none"} />
+            <MyNavbar display={"none"} inGame={"none"} />
             <LoadingOverlay active={true} spinner text='Assigning roles...'>
                <div role="main" style={{ height: "300px" }}>
                </div>
@@ -40,7 +40,7 @@ function Game() {
 
       return (
          <>
-            <MyNavbar display={"none"} />
+            <MyNavbar display={"none"} inGame={"block"} username={username} players={players}/>
 
             <div role="main" >
                <NotificationContainer />
@@ -72,11 +72,15 @@ function Game() {
                            {players.map((player, index) => (
                               <div key={index} className="rounded bg-white mb-2 d-flex align-items-center" style={{ height: "50px" }}>
                                  <div className=" ">
-                                    {player.alive
-                                       ? <img src={ale} alt="UserIcon" style={{ padding: "5px", width: "40px", filter: FILTERS[(index % FILTERS_NUM)] }} />
+                                    {(myPlayer.alive)
+                                       ? <>{(player.alive && player.online)
+                                          ? <img src={ale} alt="UserIcon" style={{ padding: "5px", width: "40px", filter: FILTERS[(index % FILTERS_NUM)] }} />
 
-                                       : <img src={aleDead} alt="DeadUserIcon" style={{ padding: "5px", width: "40px", filter: FILTERS[(index % FILTERS_NUM)] }} />
+                                          : <img src={aleDead} alt="DeadUserIcon" style={{ padding: "5px", width: "40px", filter: FILTERS[(index % FILTERS_NUM)] }} />
+                                       }</>
+                                       : <img className="rounded" src={ICONS[player.role]} alt="UserIcon" style={{ marginLeft: "5px", width: "40px" }} />
                                     }
+
                                  </div>
                                  <div className="m-auto text-center">
                                     {player.username}
