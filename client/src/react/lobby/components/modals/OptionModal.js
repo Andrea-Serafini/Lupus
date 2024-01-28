@@ -8,8 +8,6 @@ import { sendMessage } from "../../../../peer/Peer";
 export default function OptionModal(props) {
 
     let dispatch = useDispatch();
-    let valueOptions = useSelector(state => state.options.wolfNumber);
-    let extrasOptions = useSelector(state => state.options.extras);
     let value = useSelector(state => state.game.wolfNumber);
     let extras = useSelector(state => state.game.extras);
 

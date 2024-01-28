@@ -5,22 +5,25 @@ import { Navigate } from "react-router-dom";
 import LoadingOverlay from "react-loading-overlay-ts"
 import { Button, Container, Row } from "react-bootstrap";
 import { NotificationContainer } from "react-notifications";
-import { CARDS, ICONS } from "../../util/config";
-import ale from "../../img/ale.svg"
-import aleDead from "../../img/ghost-solid.svg"
+import { CARDS, CARDS_BW, ICONS, ICONS_BW } from "../../util/config";
+import ale from "../../img/ALE_icon.svg"
+import aleDead from "../../img/GHOST_icon.svg"
 import backCard from "../../img/SVG/CARDS/RETRO_card.svg"
 import { FILTERS, FILTERS_NUM } from "../../util/config";
 import { setCardVisible } from "../../redux/util/reducer";
 import CardModal from "./components/modals/CardModal";
+import VoteRow from "./components/vote/VoteRow";
+import LeaveButton from "./components/buttons/LeaveButton";
+import SaveButton from "./components/buttons/SaveButton";
 
 function Game() {
    let username = useSelector(state => state.user.username);
    let gamePhase = useSelector(state => state.game.phase);
    let history = useSelector(state => state.game.history);
    let players = useSelector(state => state.game.players);
+   let myPlayer = players.filter((player) => player.username === username)[0]
    let cardVisible = useSelector(state => state.util.cardVisible);
    let dispatch = useDispatch()
-   let myPlayer = players.filter((player) => player.username === username)[0]
 
    const [show, setShow] = useState(true);
    const handleClose = () => setShow(false);
@@ -36,21 +39,35 @@ function Game() {
             </LoadingOverlay>
          </>
       );
+   } else if (gamePhase === "goodWon" || gamePhase === "badWon") {
+      return (
+         <>
+            <MyNavbar display={"none"} inGame={"none"} />
+            <div role="main" style={{ height: "300px" }}>
+               <div className="mx-auto pt-5 text-center col-lg-6 col-9"><h2 style={{ color: "white" }}> The game has ended, {gamePhase}</h2></div>
+               <div className="mx-auto pt-5 text-center col-lg-3 col-6">
+                  <SaveButton players={players} me={myPlayer}/>
+                  <LeaveButton players={players} />
+               </div>
+            </div>
+         </>
+      )
    } else if (gamePhase !== null) {
 
       return (
          <>
-            <MyNavbar display={"none"} inGame={"block"} username={username} players={players}/>
+            <MyNavbar display={"none"} inGame={"block"} username={username} players={players} />
 
             <div role="main" >
                <NotificationContainer />
                <CardModal backCard={backCard} card={CARDS[myPlayer.role]} show={show} handleClose={handleClose} />
+
                <Container>
-                  <div className="mx-auto pt-lg-2 text-center col-lg-6 col-9"></div>
+                  <VoteRow players={players} myPlayer={myPlayer} gamePhase={gamePhase} />
                   <Row className="d-flex justify-content-center">
 
                      <div className="my-3 p-3 container col-lg-4 col-9 rounded trnsp order-lg-2 text-center" >
-                        <img className="rounded" src={cardVisible ? CARDS[myPlayer.role] : backCard} alt="Card" style={{ width: "90%" }} />
+                        <img className="rounded" src={cardVisible ? myPlayer.alive ? CARDS[myPlayer.role] : CARDS_BW[myPlayer.role]: backCard} alt="Card" style={{ width: "90%" }} />
                         <Button className="col-7 mt-3" size="md" block="true" onClick={() => { dispatch(setCardVisible(!cardVisible)) }}>
                            {cardVisible ? "Hide" : "Show"}
                         </Button>
@@ -75,10 +92,13 @@ function Game() {
                                     {(myPlayer.alive)
                                        ? <>{(player.alive && player.online)
                                           ? <img src={ale} alt="UserIcon" style={{ padding: "5px", width: "40px", filter: FILTERS[(index % FILTERS_NUM)] }} />
-
                                           : <img src={aleDead} alt="DeadUserIcon" style={{ padding: "5px", width: "40px", filter: FILTERS[(index % FILTERS_NUM)] }} />
                                        }</>
-                                       : <img className="rounded" src={ICONS[player.role]} alt="UserIcon" style={{ marginLeft: "5px", width: "40px" }} />
+                                       :
+                                       <>{(player.alive && player.online)
+                                          ? <img className="rounded" src={ICONS[player.role]} alt="UserIcon" style={{ marginLeft: "5px", width: "40px" }} />
+                                          : <img className="rounded" src={ICONS_BW[player.role]} alt="UserIcon" style={{ marginLeft: "5px", width: "40px" }} />
+                                       }</>
                                     }
 
                                  </div>

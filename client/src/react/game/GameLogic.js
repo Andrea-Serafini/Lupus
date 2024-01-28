@@ -1,9 +1,12 @@
 import { createUser, sendMessage } from "../../peer/Peer"
-import { addHistory, setPhase, setPlayers } from "../../redux/game/reducer"
-import { EXTRAS, ROLES } from "../../util/config"
+import { addHistory, setHistory, setPhase, setPlayers } from "../../redux/game/reducer"
+import { socket } from "../../socket/socket"
+import { EXTRAS, PHASES, ROLES } from "../../util/config"
+import { endGame } from "../lobby/LobbyLogic"
 
 
 export function sendFinalConfig(wolfNumber, extras) {
+
     sendMessage({ "maxWolf": wolfNumber })
     extras.forEach((extra) => {
         sendMessage({ "extra": extra.name, "used": extra.used })
@@ -31,15 +34,15 @@ export function assignRoles(dispatch, players, wolfNumber, extras) {
 
         } else {
             player = createUser(players[index].username, players[index].peerID, ROLES[2], true, players[index].vote, true)
-
         }
         playersList = [...playersList, player]
     })
-    
+
     dispatch(setPlayers(playersList))
     sendMessage({ "players": playersList })
-    dispatch(setPhase("night"))
-    sendMessage({ "phase": "night" })
+    dispatch(setPhase(PHASES[1]))
+    sendMessage({ "phase": PHASES[1] })
+
 
     let wolfHistory
     if (wolfNumber === 1) {
@@ -47,12 +50,14 @@ export function assignRoles(dispatch, players, wolfNumber, extras) {
     } else {
         wolfHistory = "There are " + wolfNumber + " wolves"
     }
-    dispatch(addHistory(wolfHistory))
-    sendMessage({ "history": wolfHistory })
+
+    let newHistory = [wolfHistory]
+    dispatch(setHistory(newHistory))
+    sendMessage({ "allHistory": newHistory })
 
     extras.forEach((extra) => {
         if (extra.used) {
-            dispatch(addHistory("There is a " + extra.name ))
+            dispatch(addHistory("There is a " + extra.name))
             sendMessage({ "history": "There is a " + extra.name })
         }
     })
@@ -76,4 +81,12 @@ function createRandomOrderedList(value) {
     }
 
     return numbers
+}
+
+
+export function saveGame(dispatch, players, me) {
+    console.log("game saved")
+    socket.emit('save', { username: me.username });
+    endGame(dispatch, players)
+
 }

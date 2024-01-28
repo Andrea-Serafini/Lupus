@@ -1,9 +1,9 @@
 import { useDispatch } from "react-redux"
 
 import LobbyButton from "../../../common/components/FormButton"
-import { leaveLobby } from "../../LobbyLogic"
+import { endGame } from "../../../lobby/LobbyLogic"
 
 export default function LeaveButton(props) {
     const dispatch = useDispatch()
-    return <LobbyButton text="Leave" variant="secondary" onClick={() => leaveLobby(dispatch, props.players, props.username)} />
+    return <LobbyButton text="Leave" variant="secondary" onClick={() => endGame(dispatch, props.players)} />
 }

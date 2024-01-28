@@ -4,6 +4,8 @@ import LobbyButton from "../../../common/components/FormButton"
 import { setPhase } from "../../../../redux/game/reducer";
 import { sendMessage } from "../../../../peer/Peer";
 import { assignRoles, sendFinalConfig } from "../../../game/GameLogic";
+import { MIN_PLAYERS } from "../../../../util/config";
+import { NotificationManager } from "react-notifications";
 
 export default function PlayButton(props) {
     const dispatch = useDispatch();
@@ -12,12 +14,17 @@ export default function PlayButton(props) {
 }
 
 function playClicked(dispatch, wolfNumber, extras, players) {
-    dispatch(setPhase("loading"))
-    sendMessage({ "phase": "loading" })
+    if (players.length >= MIN_PLAYERS) {
+        dispatch(setPhase("loading"))
+        sendMessage({ "phase": "loading" })
 
-    sendFinalConfig(wolfNumber, extras)
+        sendFinalConfig(wolfNumber, extras)
 
-    assignRoles(dispatch, players, wolfNumber, extras)
+        assignRoles(dispatch, players, wolfNumber, extras)
+    } else {
+        NotificationManager.error("Invite someone else before", "Not enough players", 3000)
+    }
+
 
 }
 

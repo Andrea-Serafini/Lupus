@@ -118,7 +118,7 @@ export function destroyPeer(socket) {
     }
 }
 
-export function createUser(username, peerID, role, alive, vote, online = false) {
+export function createUser(username, peerID, role, alive, vote = null, online = false) {
     return {
         username: username,
         peerID: peerID,

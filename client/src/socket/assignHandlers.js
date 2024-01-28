@@ -6,7 +6,6 @@ import "react-notifications/lib/notifications.css"
 import { logout } from "./socket";
 import { sleep } from "../util/config";
 import { connectPeer, createUser, disconnectPeer, reconnectPeer } from "../peer/Peer";
-import { useSelector } from "react-redux";
 
 
 export function assignHandlers(socket, dispatch) {

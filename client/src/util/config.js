@@ -1,14 +1,39 @@
-import wolfCard from "../img/SVG/CARDS/LUPO_card.svg"
 import wolfIcon from "../img/SVG/ICONS/LUPO_icon.svg"
-import villagerCard from "../img/SVG/CARDS/ABITANTE_card.svg"
 import villagerIcon from "../img/SVG/ICONS/ABITANTE_icon.svg"
-import alphaCard from "../img/SVG/CARDS/LUPO_ALPHA_card.svg"
 import alphaIcon from "../img/SVG/ICONS/LUPO_ALPHA_icon.svg"
-import bodyguardCard from "../img/SVG/CARDS/BODYGUARD_card.svg"
 import bodyguardIcon from "../img/SVG/ICONS/BODYGUARD_icon.svg"
-import clairvoyantCard from "../img/SVG/CARDS/VEGGENTE_card.svg"
 import clairvoyantIcon from "../img/SVG/ICONS/VEGGENTE_icon.svg"
+//bw
+import wolfIconBw from "../img/SVG/ICONS/LUPO_iconBW.svg"
+import villagerIconBw from "../img/SVG/ICONS/ABITANTE_iconBW.svg"
+import alphaIconBw from "../img/SVG/ICONS/LUPO_ALPHA_iconBW.svg"
+import bodyguardIconBw from "../img/SVG/ICONS/BODYGUARD_iconBW.svg"
+import clairvoyantIconBw from "../img/SVG/ICONS/VEGGENTE_iconBW.svg"
 
+//it
+import wolfCardIt from "../img/SVG/CARDS/it/LUPO_card.svg"
+import villagerCardIt from "../img/SVG/CARDS/it/ABITANTE_card.svg"
+import alphaCardIt from "../img/SVG/CARDS/it/LUPO_ALPHA_card.svg"
+import bodyguardCardIt from "../img/SVG/CARDS/it/BODYGUARD_OP_card.svg"
+import clairvoyantCardIt from "../img/SVG/CARDS/it/VEGGENTE_card.svg"
+//en
+import wolfCardEn from "../img/SVG/CARDS/en/LUPO_card_en.svg"
+import villagerCardEn from "../img/SVG/CARDS/en/ABITANTE_card_en.svg"
+import alphaCardEn from "../img/SVG/CARDS/en/LUPO_ALPHA_card_en.svg"
+import bodyguardCardEn from "../img/SVG/CARDS/en/BODYGUARD_OP_card_en.svg"
+import clairvoyantCardEn from "../img/SVG/CARDS/en/VEGGENTE_card_en.svg"
+//it_bw
+import wolfCardItBw from "../img/SVG/CARDS/it_bw/LUPO_cardBW.svg"
+import villagerCardItBw from "../img/SVG/CARDS/it_bw/ABITANTE_cardBW.svg"
+import alphaCardItBw from "../img/SVG/CARDS/it_bw/LUPO_ALPHA_cardBW.svg"
+import bodyguardCardItBw from "../img/SVG/CARDS/it_bw/BODYGUARD_OP_cardBW.svg"
+import clairvoyantCardItBw from "../img/SVG/CARDS/it_bw/VEGGENTE_cardBW.svg"
+//en_bw
+import wolfCardEnBw from "../img/SVG/CARDS/en_bw/LUPO_card_enBW.svg"
+import villagerCardEnBw from "../img/SVG/CARDS/en_bw/ABITANTE_card_enBW.svg"
+import alphaCardEnBw from "../img/SVG/CARDS/en_bw/LUPO_ALPHA_card_enBW.svg"
+import bodyguardCardEnBw from "../img/SVG/CARDS/en_bw/BODYGUARD_OP_card_enBW.svg"
+import clairvoyantCardEnBw from "../img/SVG/CARDS/en_bw/VEGGENTE_card_enBW.svg"
 
 export const SERVER_ADDRESS = "https://wise-resolved-wasp.ngrok-free.app" //"http://localhost:8080"
 
@@ -62,6 +87,9 @@ export const FILTERS = {
     20: "invert(21%) sepia(72%) saturate(7467%) hue-rotate(358deg) brightness(105%) contrast(121%)", // light purple
 }
 
+//Language
+export const LANGUAGE = "en"
+//export const LANGUAGE = "it" 
 
 //Game
 export const MIN_PLAYERS = 3 //8
@@ -79,10 +107,6 @@ export const ROLES_ICONS = {
     1: wolfIcon,
     2: villagerIcon
 }
-export const ROLES_CARDS = {
-    1: wolfCard,
-    2: villagerCard
-}
 
 export const EXTRAS = {
     1: "Alpha Wolf",
@@ -99,19 +123,43 @@ export const EXTRAS_ICONS = {
     2: bodyguardIcon,
     3: clairvoyantIcon
 }
-export const EXTRAS_CARDS = {
-    1: alphaCard,
-    2: bodyguardCard,
-    3: clairvoyantCard
+
+
+export let CARDS
+export let CARDS_BW
+
+if (LANGUAGE === "en") {
+    CARDS = {
+        "Wolf": wolfCardEn,
+        "Villager": villagerCardEn,
+        "Alpha Wolf": alphaCardEn,
+        "Bodyguard": bodyguardCardEn,
+        "Clairvoyant": clairvoyantCardEn
+    }
+    CARDS_BW = {
+        "Wolf": wolfCardEnBw,
+        "Villager": villagerCardEnBw,
+        "Alpha Wolf": alphaCardEnBw,
+        "Bodyguard": bodyguardCardEnBw,
+        "Clairvoyant": clairvoyantCardEnBw
+    }
+} else if (LANGUAGE === "it") {
+    CARDS = {
+        "Wolf": wolfCardIt,
+        "Villager": villagerCardIt,
+        "Alpha Wolf": alphaCardIt,
+        "Bodyguard": bodyguardCardIt,
+        "Clairvoyant": clairvoyantCardIt
+    }
+    CARDS_BW = {
+        "Wolf": wolfCardItBw,
+        "Villager": villagerCardItBw,
+        "Alpha Wolf": alphaCardItBw,
+        "Bodyguard": bodyguardCardItBw,
+        "Clairvoyant": clairvoyantCardItBw
+    }
 }
 
-export const CARDS = {
-    "Wolf": wolfCard,
-    "Villager": villagerCard,
-    "Alpha Wolf": alphaCard,
-    "Bodyguard": bodyguardCard,
-    "Clairvoyant": clairvoyantCard
-}
 
 export const ICONS = {
     "Wolf": wolfIcon,
@@ -121,4 +169,32 @@ export const ICONS = {
     "Clairvoyant": clairvoyantIcon
 }
 
+export const ICONS_BW = {
+    "Wolf": wolfIconBw,
+    "Villager": villagerIconBw,
+    "Alpha Wolf": alphaIconBw,
+    "Bodyguard": bodyguardIconBw,
+    "Clairvoyant": clairvoyantIconBw
+}
+
+export const TURNS = {
+    "Wolf": 1,
+    "Alpha Wolf": 1,
+    "Bodyguard": 2,
+    "Clairvoyant": 3,
+    "Villager": 4
+}
+
+export const PHASES = {
+    1: "night",
+    2: "Bodyguard",
+    3: "Clairvoyant",
+    4: "day"
+}
+export const PHASE_ORDER = {
+    "night": 1,
+    "Bodyguard": 2,
+    "Clairvoyant": 3,
+    "day": 4
+}
 

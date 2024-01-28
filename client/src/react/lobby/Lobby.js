@@ -26,9 +26,7 @@ function Lobby() {
    let myPlayer = playersList.filter((player) => player.username === username)[0]
    let partyClosed = useSelector(state => state.game.partyClosed);
    let peerConnected = useSelector(state => state.util.peerConnected)
-   let socketConnected = useSelector(state => state.util.socketConnected)
-   let wolfNumberOptions = useSelector(state => state.options.wolfNumber);
-   let extrasOptions = useSelector(state => state.options.extras);
+   let socketConnected = useSelector(state => state.util.socketConnected);
    let wolfNumber = useSelector(state => state.game.wolfNumber);
    let extras = useSelector(state => state.game.extras);
    let sessionID = sessionStorage.getItem("sessionID");

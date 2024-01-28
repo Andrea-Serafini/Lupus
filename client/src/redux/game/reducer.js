@@ -79,7 +79,7 @@ function update(state, action) {
 }
 
 function remove(state, action) {
-    if (state.phase === null) {
+    if (state.phase === null || state.phase === "goodWon" || state.phase === "badWon" ) {
         console.log("removing player")
         let updated = state.players.filter((player) => player.peerID !== action.payload)
 
