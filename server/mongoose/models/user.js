@@ -14,6 +14,18 @@ const UserSchema = new Schema({
         type: String,
         required: true
     },
+    goodWins: {
+        type: Number,
+        required: true
+    },
+    badWins: {
+        type: Number,
+        required: true
+    },
+    playedGames: {
+        type: Array,
+        required: true
+    },
 });
 
 UserSchema.pre("save", function (next) {

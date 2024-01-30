@@ -35,7 +35,7 @@ import alphaCardEnBw from "../img/SVG/CARDS/en_bw/LUPO_ALPHA_card_enBW.svg"
 import bodyguardCardEnBw from "../img/SVG/CARDS/en_bw/BODYGUARD_OP_card_enBW.svg"
 import clairvoyantCardEnBw from "../img/SVG/CARDS/en_bw/VEGGENTE_card_enBW.svg"
 
-export const SERVER_ADDRESS = "http://localhost:8080" // "https://wise-resolved-wasp.ngrok-free.app" 
+export const SERVER_ADDRESS = "https://wise-resolved-wasp.ngrok-free.app" // "http://localhost:8080"  
 
 //Login
 export const USERNAME_MIN_LENGTH = 4
@@ -90,7 +90,7 @@ export const FILTERS = {
 //Language
 //export const LANGUAGE = "en"
 //export const LANGUAGE = "it" 
-if(sessionStorage.getItem("lupusLanguage") == null){
+if (sessionStorage.getItem("lupusLanguage") == null) {
     sessionStorage.setItem("lupusLanguage", "en");
 }
 export const LANGUAGE = sessionStorage.getItem("lupusLanguage");

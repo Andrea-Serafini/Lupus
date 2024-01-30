@@ -13,6 +13,7 @@ const server = require('http').createServer(app);
 //DB
 const { mongoose } = require("mongoose");
 const User = require("./mongoose/models/user");
+const Game = require("./mongoose/models/game");
 const bodyParser = require("body-parser");
 //Socket.io
 const sockets = require("socket.io");
@@ -28,7 +29,9 @@ const rooms = []
 app.use(cors());
 //Decode every request body to json format
 app.use(bodyParser.json());
+app.set('json spaces', 2)
 app.use(require('./routes/user'));
+app.use(require('./routes/game'));
 app.get('/', (req, res) => {
     res.send('LUPUS' + '<br/>' + 'Discovery server running');
 });
@@ -142,7 +145,10 @@ function goLive() {
                     } else {
                         var newUser = new User({
                             username: message.username,
-                            password: message.password
+                            password: message.password,
+                            goodWins: 0,
+                            badWins: 0,
+                            playedGames: [],
                         });
 
                         User.create(newUser)
@@ -231,6 +237,11 @@ function goLive() {
             //console.log("PEER: " + message.id + " - destroyed ");
             removePeerIDFromRoom(message.peerId, socket)
         });
+
+        socket.on('save', (message) => {
+            saveGame(message, socket)
+            console.log("USER: " + message.username + " - saved the game ");
+        });
     });
 }
 
@@ -312,5 +323,70 @@ function removePeerIDFromRoom(id, socket) {
 
 }
 
+function saveGame(message, socket) {
+
+    Game.findOne({ gameCode: message.gameCode })
+        .then(function (dbUser) {
+            if (dbUser == null) {
+
+                let players = message.players.map((player) => {
+                    return {
+                        "username": player.username,
+                        "role": player.role
+                    }
+                })
 
 
+                players.forEach((player) => {
+                    User.findOne({ username: player.username })
+                        .then(function (dbUser) {
+                            if (dbUser != null) {
+                                let playedGames = dbUser.playedGames
+                                playedGames = [...playedGames, message.gameCode]
+                                let goodWins = dbUser.goodWins
+                                let badWins = dbUser.badWins
+                                if (message.winners == "goodWon" && roleIsGood(player.role)) {
+                                    goodWins = goodWins + 1
+                                } else if (message.winners == "badWon" && !roleIsGood(player.role)) {
+                                    badWins = badWins + 1
+                                }
+                                User.findOneAndUpdate({ "username": player.username },
+                                    { "goodWins": goodWins, "badWins": badWins, "playedGames": playedGames })
+                                    .catch(function (err) {
+                                        console.log(err);
+                                    });
+                            }
+                        })
+                        .catch(function (err) {
+                            console.log(err);
+                        });
+                })
+
+                var newGame = new Game({
+                    gameCode: message.gameCode,
+                    winners: message.winners,
+                    players: players,
+                    history: message.history
+                });
+
+                Game.create(newGame)
+                    .then(function (_) {
+                        socket.emit("save_done");
+                    })
+                    .catch(function (err) {
+                        // If an error occurred, log it
+                        console.log(err);
+                    });
+            }
+        })
+        .catch(function (err) {
+            console.log(err);
+        });
+}
+
+function roleIsGood(role) {
+    if (role == "Wolf" || role == "Wolf") {
+        return false
+    }
+    return true
+}
