@@ -19,8 +19,8 @@ export function stats() {
     console.log("stats")
 }
 
-export function language() {
-    sessionStorage.setItem("lupusLanguage", "it");
+export function language(language) {
+    sessionStorage.setItem("lupusLanguage", language);
 }
 
 
