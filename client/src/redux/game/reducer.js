@@ -4,6 +4,7 @@ import { EXTRAS, WOLF_STD_NUM } from '../../util/config'
 
 
 var initialState = {
+    gameCode: null,
     partyClosed: false,
     players: [],
     phase: null,
@@ -17,6 +18,9 @@ const gameSlice = createSlice({
     name: 'game',
     initialState,
     reducers: {
+        setGameCode(state, action) {
+            state.gameCode = action.payload
+        },
         setPartyClosed(state, action) {
             state.partyClosed = action.payload
         },
@@ -65,6 +69,7 @@ function update(state, action) {
             if (player.username === action.payload.username) {
                 //player.online = true
                 player.peerID = action.payload.peerID
+                sendMessageTo(action.payload.peerID, { "gameCode": state.gameCode })
                 sendMessageTo(action.payload.peerID, { "phase": state.phase })
                 sendMessageTo(action.payload.peerID, { "players": state.players })
                 sendMessageTo(action.payload.peerID, { "allHistory": state.history })
@@ -107,5 +112,5 @@ function changeExtras(state, action) {
     });
 }
 
-export const { setPartyClosed, setPlayers, addPlayer, updatePlayer, removePlayer, setPhase, setHistory, addHistory, setWolfNumber, toggleExtras, setExtras } = gameSlice.actions
+export const { setGameCode, setPartyClosed, setPlayers, addPlayer, updatePlayer, removePlayer, setPhase, setHistory, addHistory, setWolfNumber, toggleExtras, setExtras } = gameSlice.actions
 export default gameSlice.reducer

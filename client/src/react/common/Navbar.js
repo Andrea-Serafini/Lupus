@@ -6,11 +6,13 @@ import logoMobile from "../../img/LUPUS_LOGO_MOBILE.svg"
 import { Navbar, Container, NavDropdown } from "react-bootstrap"
 import { logout } from "../../socket/socket";
 import { leave } from "../lobby/LobbyLogic";
+import { useTranslation } from "react-i18next";
+import { language, stats } from "../home/HomeLogic";
 
 
 // Here, we display our Navbar
 export default function MyNavbar(props) {
-
+  const { t } = useTranslation();
   let username = useSelector(state => state.user.username);
   let dispatch = useDispatch();
 
@@ -25,10 +27,15 @@ export default function MyNavbar(props) {
           <Navbar.Toggle />
           <Navbar.Collapse className="justify-content-end">
             <NavDropdown title={username} id="basic-nav-dropdown" style={{ color: "white", display: props.display }}>
-              <NavDropdown.Item onClick={() =>logout(dispatch)}>Logout</NavDropdown.Item>
+              <NavDropdown.Item onClick={() =>logout(dispatch)}>{t("Logout")}</NavDropdown.Item>
             </NavDropdown>
-            <NavDropdown title="Leave" id="basic-nav-dropdown2" style={{ color: "white", display: props.inGame }}>
-              <NavDropdown.Item onClick={() =>leave(dispatch, props.players, props.username)}>Leave the game</NavDropdown.Item>
+            <NavDropdown title={username} id="basic-nav-dropdown" style={{ color: "white", display: props.displayFull }}>
+              <NavDropdown.Item onClick={() =>logout(dispatch)}>{t("Logout")}</NavDropdown.Item>
+              <NavDropdown.Item onClick={() =>stats()}>{t("Stats")}</NavDropdown.Item>
+              <NavDropdown.Item onClick={() =>language()}>{t("Language")}</NavDropdown.Item>
+            </NavDropdown>
+            <NavDropdown title={t("Leave")} id="basic-nav-dropdown2" style={{ color: "white", display: props.inGame }}>
+              <NavDropdown.Item onClick={() =>leave(dispatch, props.players, props.username)}>{t("Leave the game")}</NavDropdown.Item>
             </NavDropdown>
           </Navbar.Collapse>
         </Container>

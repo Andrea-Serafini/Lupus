@@ -15,9 +15,12 @@ import CardModal from "./components/modals/CardModal";
 import VoteRow from "./components/vote/VoteRow";
 import LeaveButton from "./components/buttons/LeaveButton";
 import SaveButton from "./components/buttons/SaveButton";
+import { useTranslation } from "react-i18next";
 
 function Game() {
+   const { t } = useTranslation();
    let username = useSelector(state => state.user.username);
+   let gameCode = useSelector(state => state.game.gameCode);
    let gamePhase = useSelector(state => state.game.phase);
    let history = useSelector(state => state.game.history);
    let players = useSelector(state => state.game.players);
@@ -32,7 +35,7 @@ function Game() {
 
       return (
          <>
-            <MyNavbar display={"none"} inGame={"none"} />
+            <MyNavbar display={"none"} displayFull={"none"} inGame={"none"} />
             <LoadingOverlay active={true} spinner text='Assigning roles...'>
                <div role="main" style={{ height: "300px" }}>
                </div>
@@ -42,11 +45,11 @@ function Game() {
    } else if (gamePhase === "goodWon" || gamePhase === "badWon") {
       return (
          <>
-            <MyNavbar display={"none"} inGame={"none"} />
+            <MyNavbar display={"none"} displayFull={"none"} inGame={"none"} />
             <div role="main" style={{ height: "300px" }}>
                <div className="mx-auto pt-5 text-center col-lg-6 col-9"><h2 style={{ color: "white" }}> The game has ended, {gamePhase}</h2></div>
                <div className="mx-auto pt-5 text-center col-lg-3 col-6">
-                  <SaveButton players={players} me={myPlayer}/>
+                  <SaveButton winners={gamePhase} gameCode={gameCode} players={players} me={username} history={history}/>
                   <LeaveButton players={players} />
                </div>
             </div>
@@ -56,7 +59,7 @@ function Game() {
 
       return (
          <>
-            <MyNavbar display={"none"} inGame={"block"} username={username} players={players} />
+            <MyNavbar display={"none"} displayFull={"none"} inGame={"block"} username={username} players={players} />
 
             <div role="main" >
                <NotificationContainer />
@@ -69,18 +72,18 @@ function Game() {
                      <div className="my-3 p-3 container col-lg-4 col-9 rounded trnsp order-lg-2 text-center" >
                         <img className="rounded" src={cardVisible ? myPlayer.alive ? CARDS[myPlayer.role] : CARDS_BW[myPlayer.role]: backCard} alt="Card" style={{ width: "90%" }} />
                         <Button className="col-7 mt-3" size="md" block="true" onClick={() => { dispatch(setCardVisible(!cardVisible)) }}>
-                           {cardVisible ? "Hide" : "Show"}
+                           {cardVisible ? t("Hide") : t("Show")}
                         </Button>
                      </div>
 
                      <div className="my-3 p-3 container col-lg-3 col-9 rounded trnsp order-lg-3" style={{ height: "fit-content" }}>
                         <ul className="rounded list-group mb-2" id="gameHisotry" style={{ height: "-webkit-fill-available", overflowY: "scroll", background: "white", maxHeight: "400px" }}>
-                           <li key="0" className="list-group-item" style={{ "background": "#d4e5ed" }}><strong>It's {gamePhase} time...</strong></li>
+                           <li key="0" className="list-group-item" style={{ "background": "#d4e5ed" }}><strong>{t("It's " + gamePhase +" time...")}</strong></li>
 
                            {history.map((event, index) => (
                               <li key={index + 1} className="list-group-item">{event}</li>
                            ))}
-                           <li key={history.length + 1} className="list-group-item"><strong>Let the game begin</strong></li>
+                           <li key={history.length + 1} className="list-group-item"><strong>{t("Let the game begin")}</strong></li>
                         </ul>
                      </div>
 

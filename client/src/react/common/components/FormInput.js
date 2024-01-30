@@ -4,6 +4,7 @@ import Form from "react-bootstrap/Form"
 
 
 export default function FormInput(props) {
+
     return (
         <>
             <h3 style={{ color: "white" }}>{props.text}</h3>

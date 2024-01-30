@@ -1,5 +1,5 @@
 import { Peer } from 'peerjs';
-import { addHistory, addPlayer, removePlayer, setHistory, setPhase, setPlayers, updatePlayer } from '../redux/game/reducer';
+import { addHistory, addPlayer, removePlayer, setGameCode, setHistory, setPhase, setPlayers, updatePlayer } from '../redux/game/reducer';
 //import { setWolfNumber, toggleExtras } from '../redux/options/reducer';
 import { setWolfNumber, toggleExtras } from '../redux/game/reducer';
 
@@ -33,6 +33,8 @@ export function handleData(data, dispatch) {
     let obj = data
     if (obj.maxWolf) {
         dispatch(setWolfNumber(obj.maxWolf))
+    } else if (obj.gameCode) {
+        dispatch(setGameCode(obj.gameCode))
     } else if (obj.extra) {
         dispatch(toggleExtras({ "name": obj.extra, "used": obj.used }))
     } else if (obj.phase) {
@@ -44,7 +46,7 @@ export function handleData(data, dispatch) {
     } else if (obj.allHistory) {
         dispatch(setHistory(obj.allHistory))
     }
-    
+
 }
 
 

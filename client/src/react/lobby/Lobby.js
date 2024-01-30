@@ -16,8 +16,10 @@ import { join } from "../home/HomeLogic";
 import { connect } from "../../socket/socket";
 import { setRoom } from "../../redux/user/reducer";
 import RejoinButton from "./components/buttons/RejoinButton";
+import { useTranslation } from "react-i18next";
 
 function Lobby() {
+   const { t } = useTranslation();
    let isLoading = useSelector(state => state.util.isLoading);
    let room = useSelector(state => state.user.room);
    let username = useSelector(state => state.user.username);
@@ -58,8 +60,8 @@ function Lobby() {
    if (room !== null && !peerConnected) {
       return (
          <>
-            <MyNavbar display={"block"} inGame={"none"}/>
-            <LoadingOverlay active={true} spinner text='Reloading the lobby...'>
+            <MyNavbar display={"block"} displayFull={"none"} inGame={"none"}/>
+            <LoadingOverlay active={true} spinner text={t('Reloading the lobby')+"..."}>
                <div role="main" style={{ height: "300px" }}>
                </div>
             </LoadingOverlay>
@@ -70,13 +72,13 @@ function Lobby() {
    } else {
       return (
          <>
-            <MyNavbar display={"block"} inGame={"none"}/>
-            <LoadingOverlay active={isLoading} spinner text='Starting the game...'>
+            <MyNavbar display={"block"} displayFull={"none"} inGame={"none"}/>
+            <LoadingOverlay active={isLoading} spinner text={t('Starting the game')+"..."}>
                <div role="main">
                   <NotificationContainer />
 
                   <Container>
-                     <div className="mx-auto pt-5 text-center col-lg-6 col-9"><h2 style={{ color: "white" }}>Lobby: {room}</h2></div>
+                     <div className="mx-auto pt-5 text-center col-lg-6 col-9"><h2 style={{ color: "white" }}>{t("Lobby")}: {room}</h2></div>
                      <Row className="d-flex justify-content-center">
                         <div className="my-1 pt-2 container col-lg-6 col-9 rounded trnsp">
                            <div className="d-lg-flex px-3 pt-3 pb-2 rounded justify-content-around flex-wrap trnsp2" >
@@ -134,10 +136,8 @@ function wasOnline(me) {
 
 function imOnline(me) {
    if (me) {
-      console.log("me is " + me.online)
       return me.online
    } else {
-      console.log("me is not present")
       return false
    }
 }

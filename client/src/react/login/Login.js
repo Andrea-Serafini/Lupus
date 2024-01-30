@@ -5,7 +5,6 @@ import { NotificationContainer } from "react-notifications"
 import LoadingOverlay from "react-loading-overlay-ts"
 import { Container, Row, Form } from 'react-bootstrap';
 
-
 import UsernameInput from "./components/input/UsernameInput"
 import PasswordInput from "./components/input/PasswordInput"
 import LoginButton from "./components/buttons/LoginButton"
@@ -14,8 +13,10 @@ import { connect } from "../../socket/socket"
 
 import Home from "../home/Home";
 import MyNavbar from "../common/Navbar";
+import { useTranslation } from 'react-i18next';
 
 export default function CredentialsForm(props) {
+   const { t } = useTranslation();
 
    let dispatch = useDispatch();
 
@@ -34,12 +35,12 @@ export default function CredentialsForm(props) {
    if (token === null) {
       return (
          <>
-            <MyNavbar display={"none"} inGame={"none"}/>
-            <LoadingOverlay active={isLoading} spinner text='Connecting to server...'>
+            <MyNavbar display={"none"} displayFull={"none"} inGame={"none"}/>
+            <LoadingOverlay active={isLoading} spinner text={t('Connecting to server...')}>
                <div role="main" >
                   <NotificationContainer />
                   <Container>
-                     <div className="mx-auto pt-5 text-center col-lg-6 col-9"><h2 style={{ color: "white" }}>Login</h2></div>
+                     <div className="mx-auto pt-5 text-center col-lg-6 col-9"><h2 style={{ color: "white" }}>{t("Login")}</h2></div>
                      <Row className="d-flex justify-content-center">
                         <div className="my-1 container col-lg-6 col-9 rounded trnsp">
                            <Form id='loginForm' className="mt-1 mb-3">

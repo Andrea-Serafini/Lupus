@@ -1,12 +1,14 @@
 import { useDispatch } from "react-redux"
 
 import LobbyButton from "../../../common/components/FormButton"
-import { setPhase, setPlayers } from "../../../../redux/game/reducer";
+import { setPlayers } from "../../../../redux/game/reducer";
 import { sendMessage } from "../../../../peer/Peer";
+import { useTranslation } from "react-i18next";
 
 export default function RejoinButton(props) {
+    const { t } = useTranslation();
     const dispatch = useDispatch();
-    return <LobbyButton text="Rejoin" variant="success"
+    return <LobbyButton text={t("Rejoin")} variant="success"
         onClick={() => playClicked(dispatch, props.players, props.username)} />
 }
 
@@ -19,7 +21,7 @@ function playClicked(dispatch, players, username) {
         }
     });
     dispatch(setPlayers(updatedPlayers))
-    sendMessage({"players": updatedPlayers})
+    sendMessage({ "players": updatedPlayers })
 
 }
 

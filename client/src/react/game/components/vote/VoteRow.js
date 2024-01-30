@@ -7,9 +7,10 @@ import { sendMessage } from "../../../../peer/Peer";
 import { useDispatch, useSelector } from "react-redux";
 import ClairvoyantModal from "../modals/ClairvoyantModal";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 
 export default function VoteRow(props) {
-
+    const { t } = useTranslation();
     let players = props.players
     let me = props.myPlayer
     let phase = props.gamePhase
@@ -31,7 +32,7 @@ export default function VoteRow(props) {
         return (
             <>
                 <ClairvoyantModal show={show} handleClose={handleClose} players={players} chosen={chosen} />
-                <div className="mx-auto pt-2 text-center col-lg-6 col-9"><h3 style={{ color: "white" }}>Who do you want to accuse?</h3></div>
+                <div className="mx-auto pt-2 text-center col-lg-6 col-9"><h3 style={{ color: "white" }}>{t("Who do you want to accuse?")}</h3></div>
                 <Row className="d-flex justify-content-center">
                     <div className="mb-3 p-3 d-lg-flex container col-lg-9 col-9 rounded trnsp justify-content-around flex-wrap text-center" >
                         {players.map((player, index) => (
@@ -60,7 +61,7 @@ export default function VoteRow(props) {
         if (phase === PHASES[1]) {
             return (
                 <>
-                    <div className="mx-auto pt-2 text-center col-lg-6 col-9"><h3 style={{ color: "white" }}>Who do you want to kill?</h3></div>
+                    <div className="mx-auto pt-2 text-center col-lg-6 col-9"><h3 style={{ color: "white" }}>{t("Who do you want to kill?")}</h3></div>
                     <Row className="d-flex justify-content-center">
                         <div className="mb-3 p-3 d-lg-flex container col-lg-9 col-9 rounded trnsp justify-content-around flex-wrap text-center" >
                             {players.map((player, index) => (

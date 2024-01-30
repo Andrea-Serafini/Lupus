@@ -84,9 +84,16 @@ function createRandomOrderedList(value) {
 }
 
 
-export function saveGame(dispatch, players, me) {
-    console.log("game saved")
-    socket.emit('save', { username: me.username });
+export function saveGame(dispatch, winners, gameCode, players, me, history) {
+
+    socket.emit('save', {
+        username: me,
+        gameCode: gameCode,
+        winners: winners,
+        players: players,
+        history: history
+    });
+
     endGame(dispatch, players)
 
 }

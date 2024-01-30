@@ -1,11 +1,13 @@
 import { Modal, Button, Form, InputGroup } from "react-bootstrap"
 import { useDispatch, useSelector } from "react-redux";
-//import { toggleExtras, setWolfNumber } from "../../../../redux/options/reducer";
 import { toggleExtras, setWolfNumber } from "../../../../redux/game/reducer";
 import { EXTRAS_ICONS, ROLES_ICONS } from "../../../../util/config";
 import { sendMessage } from "../../../../peer/Peer";
+import { useTranslation } from "react-i18next";
 
 export default function OptionModal(props) {
+    const { t } = useTranslation();
+
 
     let dispatch = useDispatch();
     let value = useSelector(state => state.game.wolfNumber);
@@ -40,11 +42,11 @@ export default function OptionModal(props) {
     return <>
         <Modal show={props.show} onHide={props.handleClose} >
             <Modal.Header closeButton>
-                <Modal.Title>Game options</Modal.Title>
+                <Modal.Title>{t("Game options")}</Modal.Title>
             </Modal.Header>
-            <Modal.Body><h3>Customize your settings!</h3>
+            <Modal.Body><h3>{t("Customize your settings")+"!"}</h3>
                 <Form>
-                    Select wolf number:
+                    {t("Select wolf number")+":"}
                     <div className="mt-2" style={{ width: "fit-content" }}>
                         <img className="rounded" src={ROLES_ICONS[1]} alt="Icona" style={{ width: "150px" }} />
                         <InputGroup className="mt-2 mb-3" style={{ width: "150px" }}>
@@ -55,7 +57,7 @@ export default function OptionModal(props) {
                                 value={value}
                                 disabled={true}
                                 style={{ textAlign: "center" }}
-                                aria-label="Example text with button addon"
+                                aria-label=""
                                 aria-describedby="basic-addon1"
                             />
                             <Button onClick={increment} style={{ paddingBottom: "8px", width: "40px" }} variant="outline-secondary" id="button-addon2">
@@ -65,7 +67,7 @@ export default function OptionModal(props) {
                     </div>
 
                     <div className="mb-3">
-                        Select extra characters:
+                    {t("Select extra characters")+":"}
                         {extras.map((extra, index) => (
                             <div className="mt-2 d-flex align-items-center" style={{}} key={index}>
                                 <img className="rounded m-auto" src={EXTRAS_ICONS[index+1]} alt="Icona" style={{ opacity: extra.used ? "100%" : "50%", width: "40px" }} />

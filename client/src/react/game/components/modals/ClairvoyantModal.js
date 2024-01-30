@@ -1,10 +1,9 @@
-import { useState } from "react";
 import { Modal, Button } from "react-bootstrap"
 import { CARDS } from "../../../../util/config";
 
 export default function ClairvoyantModal(props) {
 
-    if(!props.show) return
+    if (!props.show) return
     let chosenPlayer = props.players.filter((player) => player.username === props.chosen)[0]
     let card = CARDS[chosenPlayer.role]
     return <>
