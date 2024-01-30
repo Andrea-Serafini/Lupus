@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/Lupus/static/css/main.c6bdf76a.css",
-    "main.js": "/Lupus/static/js/main.58aaceea.js",
+    "main.js": "/Lupus/static/js/main.bb3f839a.js",
     "static/media/VEGGENTE_card.svg": "/Lupus/static/media/VEGGENTE_card.2647d3ca73d8804aa7b21a08f485f714.svg",
     "static/media/VEGGENTE_icon.svg": "/Lupus/static/media/VEGGENTE_icon.8801557fe0c463bdfc294d44719600f2.svg",
     "static/media/VEGGENTE_iconBW.svg": "/Lupus/static/media/VEGGENTE_iconBW.881d8fc90f5c611381fe6ced48f9946b.svg",
@@ -44,10 +44,10 @@
     "static/media/notification.ttf?s3g3t9": "/Lupus/static/media/notification.c5d9251ea82e42f75381.ttf",
     "index.html": "/Lupus/index.html",
     "main.c6bdf76a.css.map": "/Lupus/static/css/main.c6bdf76a.css.map",
-    "main.58aaceea.js.map": "/Lupus/static/js/main.58aaceea.js.map"
+    "main.bb3f839a.js.map": "/Lupus/static/js/main.bb3f839a.js.map"
   },
   "entrypoints": [
     "static/css/main.c6bdf76a.css",
-    "static/js/main.58aaceea.js"
+    "static/js/main.bb3f839a.js"
   ]
 }
