@@ -1,3 +1,4 @@
+//icons
 import wolfIcon from "../img/SVG/ICONS/LUPO_icon.svg"
 import villagerIcon from "../img/SVG/ICONS/ABITANTE_icon.svg"
 import alphaIcon from "../img/SVG/ICONS/LUPO_ALPHA_icon.svg"
