@@ -242,6 +242,39 @@ function goLive() {
             saveGame(message, socket)
             console.log("USER: " + message.username + " - saved the game ");
         });
+
+        socket.on('send_stats', (message) => {
+            let stats = {
+                totalWin: 0,
+                totalLost: 0,
+                badWin: 0,
+                goodWin: 0,
+                totalPlayed: 0,
+                games: []
+            }
+            User.findOne({ username: message.username })
+                .then(function (dbUser) {
+                    if (dbUser != null) {
+                        stats.badWin = dbUser.badWins
+                        stats.goodWin = dbUser.goodWins
+                        stats.totalWin = dbUser.goodWins + dbUser.badWins
+                        stats.totalPlayed = dbUser.playedGames.length
+                        stats.totalLost = stats.totalPlayed - stats.totalWin
+
+                        Game.find({ gameCode: { $in: dbUser.playedGames } })
+                            .then(function (dbGame) {
+                                if (dbGame != null) {
+                                    stats.games = dbGame
+                                    socket.emit("user_stats", stats)
+                                }
+                            })
+                    }
+
+                })
+                .catch(function (err) {
+                    console.log(err);
+                });
+        });
     });
 }
 

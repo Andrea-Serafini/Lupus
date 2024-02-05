@@ -4,7 +4,8 @@ var initialState = {
     username: null,
     id: null,
     room: null,
-    token: null
+    token: null,
+    stats: null
 }
 
 const userSlice = createSlice({
@@ -23,8 +24,11 @@ const userSlice = createSlice({
         setToken(state, action) {
             state.token = action.payload
         },
+        setStats(state, action) {
+            state.stats = action.payload
+        },
     },
 })
 
-export const { setUsername, setId, setRoom, setToken } = userSlice.actions
+export const { setUsername, setId, setRoom, setToken, setStats } = userSlice.actions
 export default userSlice.reducer

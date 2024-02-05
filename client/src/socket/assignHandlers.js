@@ -1,4 +1,4 @@
-import { setRoom, setToken, setUsername } from "../redux/user/reducer";
+import { setRoom, setStats, setToken, setUsername } from "../redux/user/reducer";
 import { setIsLoading, setPeerConnected } from "../redux/util/reducer";
 import { addPlayer, setPartyClosed } from "../redux/game/reducer";
 import { NotificationManager } from "react-notifications";
@@ -72,6 +72,11 @@ export function assignHandlers(socket, dispatch) {
     });
 
 
+    socket.on("user_stats", (message) => {
+        console.log("user_stats: " + message.totalWin)
+        dispatch(setStats(message))
+
+    });
 
     socket.on("new_peer", (message) => {
         console.log("new_peer: " + message.peerID)

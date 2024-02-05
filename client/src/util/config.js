@@ -35,7 +35,7 @@ import alphaCardEnBw from "../img/SVG/CARDS/en_bw/LUPO_ALPHA_card_enBW.svg"
 import bodyguardCardEnBw from "../img/SVG/CARDS/en_bw/BODYGUARD_OP_card_enBW.svg"
 import clairvoyantCardEnBw from "../img/SVG/CARDS/en_bw/VEGGENTE_card_enBW.svg"
 
-export const SERVER_ADDRESS = "https://wise-resolved-wasp.ngrok-free.app" // "http://localhost:8080"  
+export const SERVER_ADDRESS = "http://localhost:8080"  // "https://wise-resolved-wasp.ngrok-free.app" 
 
 //Login
 export const USERNAME_MIN_LENGTH = 4
