@@ -37,8 +37,12 @@ app.get('/', (req, res) => {
 });
 
 // Configure Mongo
-const db = "mongodb://localhost/LupusDB";
-
+let db
+if (process.env.DB_ADDRESS === null){
+    db = "mongodb://localhost/LupusDB";
+}else{
+    db = process.env.DB_ADDRESS;
+}
 // Connect to Mongo with Mongoose
 mongoose.connect(
     db,

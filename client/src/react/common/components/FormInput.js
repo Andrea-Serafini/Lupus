@@ -9,6 +9,7 @@ export default function FormInput(props) {
         <>
             <h3 style={{ color: "white" }}>{props.text}</h3>
             <Form.Control
+                id={props.id}
                 className="mb-lg-3"
                 style={useSelector(state => state.util.isLoading) ? { pointerEvents: "none", opacity: "0.4" } : {}}
                 type={props.type}

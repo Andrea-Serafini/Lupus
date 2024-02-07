@@ -64,7 +64,7 @@ export default function StatsModal(props) {
                                 </div>
                                 <div className="m-1 p-3 container col-lg-5 col-10 rounded trnsp" style={{ height: "fit-content" }}>
                                     <ul className="rounded list-group mb-2" id="gameHisotry" style={{ height: "-webkit-fill-available", overflowY: "scroll", background: "white", maxHeight: "400px" }}>
-                                        <li key={stats.games.filter(function (game) { return game.gameCode !== gameCode })[0].history.length + 1} className="list-group-item"><strong>{t("Let the game begin")}</strong></li>
+                                        <li key={stats.games.filter(function (game) { return game.gameCode === gameCode })[0].history.length + 1} className="list-group-item"><strong>{t("Let the game begin")}</strong></li>
                                         {stats.games.filter(function (game) { return game.gameCode === gameCode })[0].history.toReversed().map((event, index) => (
                                             <li key={index + 1} className="list-group-item">{event}</li>
                                         ))}

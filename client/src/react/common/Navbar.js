@@ -19,7 +19,6 @@ export default function MyNavbar(props) {
 
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
-  const handleSave = () => refreshPage(setShow);
 
   const [showStats, setShowStats] = useState(false);
   const handleCloseStats = () => setShowStats(false);
@@ -28,7 +27,7 @@ export default function MyNavbar(props) {
   return (
     <>
       <Navbar className="">
-        <LanguageModal show={show} handleClose={handleClose} handleSave={handleSave} />
+        <LanguageModal show={show} handleClose={handleClose} />
         <StatsModal show={showStats} handleClose={handleCloseStats} />
         <Container style={{ paddingLeft: "0px", marginRight: "0px", marginLeft: "0px", maxWidth: "100%" }}>
           <Navbar.Brand className="mr-0" >
@@ -62,9 +61,3 @@ function sendStatsReq(setShowStats, username) {
   setShowStats(true)
 }
 
-
-
-function refreshPage(setShow) {
-  setShow(false)
-  window.location.reload(false);
-}

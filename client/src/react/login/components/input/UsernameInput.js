@@ -12,7 +12,8 @@ export default function UsernameInput(props) {
 
 
     return <CredentialsFormInput
-        text={t("Username")+":"}
+        id="usernameInput"
+        text={t("Username") + ":"}
         type="text"
         placeholder={t("Enter Username")}
         onChange={props.onChange}

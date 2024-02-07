@@ -35,7 +35,7 @@ export default function OptionModal(props) {
     function handleAdd(extra) {
         sendMessage({ "extra": extra.name, "used": !extra.used })
 
-        dispatch(toggleExtras({"name":extra.name, "used": !extra.used}))
+        dispatch(toggleExtras({ "name": extra.name, "used": !extra.used }))
     }
 
 
@@ -44,9 +44,9 @@ export default function OptionModal(props) {
             <Modal.Header closeButton>
                 <Modal.Title>{t("Game options")}</Modal.Title>
             </Modal.Header>
-            <Modal.Body><h3>{t("Customize your settings")+"!"}</h3>
+            <Modal.Body><h3>{t("Customize your settings") + "!"}</h3>
                 <Form>
-                    {t("Select wolf number")+":"}
+                    {t("Select wolf number") + ":"}
                     <div className="mt-2" style={{ width: "fit-content" }}>
                         <img className="rounded" src={ROLES_ICONS[1]} alt="Icona" style={{ width: "150px" }} />
                         <InputGroup className="mt-2 mb-3" style={{ width: "150px" }}>
@@ -54,6 +54,7 @@ export default function OptionModal(props) {
                                 -
                             </Button>
                             <Form.Control
+                                id="wolfNumber"
                                 value={value}
                                 disabled={true}
                                 style={{ textAlign: "center" }}
@@ -67,12 +68,13 @@ export default function OptionModal(props) {
                     </div>
 
                     <div className="mb-3">
-                    {t("Select extra characters")+":"}
+                        {t("Select extra characters") + ":"}
                         {extras.map((extra, index) => (
                             <div className="mt-2 d-flex align-items-center" style={{}} key={index}>
-                                <img className="rounded m-auto" src={EXTRAS_ICONS[index+1]} alt="Icona" style={{ opacity: extra.used ? "100%" : "50%", width: "40px" }} />
+                                <img className="rounded m-auto" src={EXTRAS_ICONS[index + 1]} alt="Icona" style={{ opacity: extra.used ? "100%" : "50%", width: "40px" }} />
                                 <InputGroup className="m-auto " style={{ width: "250px" }}>
                                     <Form.Control
+                                        name={extra.name+"Label"}
                                         value={extra.name}
                                         disabled={true}
                                         style={{ textAlign: "center", background: extra.used ? "green" : "gray" }}

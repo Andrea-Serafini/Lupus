@@ -13,7 +13,8 @@ export default function PasswordInput(props) {
 
 
     return <CredentialsFormInput
-        text={t("Password")+":"}
+        id="passwordInput"
+        text={t("Password") + ":"}
         type="password"
         placeholder={t("Enter Password")}
         onChange={props.onChange}
