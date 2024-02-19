@@ -7,7 +7,7 @@ import { MIN_PLAYERS } from "../../util/config"
 import { NotificationManager } from "react-notifications"
 
 export function close(dispatch, room, numPlayers, t) {
-    
+
     if (numPlayers >= MIN_PLAYERS) {
         dispatch(setIsLoading(true))
         socket.emit("close_room", room)
@@ -55,7 +55,7 @@ export function endGame(dispatch, players) {
         element.online = false
 
     });
-    
+
     dispatch(setPlayers(updatedPlayers))
     dispatch(setPhase(null))
     dispatch(setGameCode(null))

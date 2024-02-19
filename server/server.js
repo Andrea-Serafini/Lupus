@@ -20,7 +20,7 @@ const sockets = require("socket.io");
 const io = sockets(server, { cors: { origin: "*" } });
 
 //Rooms array
-/**
+/** to confirm
  * { name, players: [{ peerID, username}], closed };
  */
 const rooms = []
@@ -38,9 +38,9 @@ app.get('/', (req, res) => {
 
 // Configure Mongo
 let db
-if (process.env.DB_ADDRESS === null){
+if (process.env.DB_ADDRESS === null || process.env.DB_ADDRESS === undefined) {
     db = "mongodb://localhost/LupusDB";
-}else{
+} else {
     db = process.env.DB_ADDRESS;
 }
 // Connect to Mongo with Mongoose

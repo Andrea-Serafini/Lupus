@@ -13,7 +13,7 @@ import { useTranslation } from 'react-i18next';
 
 
 function Home(props) {
-   
+
    const { t } = useTranslation();
    let isLoading = useSelector(state => state.util.isLoading);
    let username = useSelector(state => state.user.username);
@@ -24,8 +24,8 @@ function Home(props) {
    if (!peerConnected) { //(room === null) {
       return (
          <>
-            <MyNavbar display={"none"} displayFull={"block"} inGame={"none"} />
-            <LoadingOverlay active={isLoading} spinner text={t('Peer initializing')+'...'}>
+            <MyNavbar displayFull={"block"} />
+            <LoadingOverlay active={isLoading} spinner text={t('Peer initializing') + '...'}>
                <div role="main">
                   <NotificationContainer />
                   <Container>
@@ -48,7 +48,6 @@ function Home(props) {
       );
    } else {
       return <Navigate to="/lobby" />
-      //return (<Lobby />)
    }
 }
 

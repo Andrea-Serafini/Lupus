@@ -2,7 +2,6 @@ import { createSlice } from '@reduxjs/toolkit'
 
 var initialState = {
     username: null,
-    id: null,
     room: null,
     token: null,
     stats: null
@@ -14,9 +13,6 @@ const userSlice = createSlice({
     reducers: {
         setUsername(state, action) {
             state.username = action.payload
-        },
-        setId(state, action) {
-            state.id = action.payload
         },
         setRoom(state, action) {
             state.room = action.payload
@@ -30,5 +26,5 @@ const userSlice = createSlice({
     },
 })
 
-export const { setUsername, setId, setRoom, setToken, setStats } = userSlice.actions
+export const { setUsername, setRoom, setToken, setStats } = userSlice.actions
 export default userSlice.reducer

@@ -5,7 +5,7 @@ import { signup } from "../../LoginLogic"
 import { useTranslation } from "react-i18next";
 
 export default function SignupButton(props) {
-   const { t } = useTranslation();
+    const { t } = useTranslation();
 
     const dispatch = useDispatch()
     let socketConnected = useSelector(state => state.util.socketConnected)

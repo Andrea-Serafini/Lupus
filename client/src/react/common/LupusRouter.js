@@ -8,8 +8,11 @@ import Lobby from "../lobby/Lobby";
 import Game from "../game/Game";
 
 import Navbar from "./Navbar"
+import { useTranslation } from "react-i18next";
 
 export default function LupusRouter() {
+  
+
 
   return (
     <div>
@@ -24,12 +27,14 @@ export default function LupusRouter() {
 }
 
 export function NotFound() {
+  const { t } = useTranslation();
+
   return (
     <>
-      <Navbar display={"none"} displayFull={"none"} inGame={"none"}/>
+      <Navbar displayLang={"block"} />
       <div style={{ color: "white", textAlign: "center", marginTop: "50px" }}>
-        <h1>Oops! You seem to be lost.</h1>
-        <p>Click <Link style={{color:"white"}} to='/'>here</Link> to get back on track</p>
+        <h1>Oops! {t("You seem to be lost.")}</h1>
+        <p>{t("Click")} <Link style={{ color: "white" }} to='/'>{t("here")}</Link> {t("to get back on track")}</p>
       </div>
     </>
   )

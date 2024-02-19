@@ -35,11 +35,12 @@ export default function CredentialsForm(props) {
    if (token === null) {
       return (
          <>
-            <MyNavbar display={"none"} displayFull={"none"} inGame={"none"}/>
+            <MyNavbar displayLang={"block"} />
             <LoadingOverlay active={isLoading} spinner text={t('Connecting to server...')}>
                <div role="main" >
                   <NotificationContainer />
                   <Container>
+                  
                      <div className="mx-auto pt-5 text-center col-lg-6 col-9"><h2 style={{ color: "white" }}>{t("Login")}</h2></div>
                      <Row className="d-flex justify-content-center">
                         <div className="my-1 container col-lg-6 col-9 rounded trnsp">

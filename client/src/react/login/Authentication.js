@@ -19,6 +19,4 @@ export default function Authentication() {
         }
         return (<Home />)
     }
-
-
 }

@@ -89,16 +89,14 @@ export const FILTERS = {
 }
 
 //Language
-//export const LANGUAGE = "en"
-//export const LANGUAGE = "it" 
 if (sessionStorage.getItem("lupusLanguage") == null) {
     sessionStorage.setItem("lupusLanguage", "en");
 }
 export const LANGUAGE = sessionStorage.getItem("lupusLanguage");
 
 //Game
-export const MIN_PLAYERS = 3 //8
-export const WOLF_STD_NUM = 1 //3
+export const MIN_PLAYERS = 3 //TODO: 8
+export const WOLF_STD_NUM = 1 //TODO: 3
 
 export const ROLES = {
     1: "Wolf",

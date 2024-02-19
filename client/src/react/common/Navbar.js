@@ -36,15 +36,18 @@ export default function MyNavbar(props) {
           </Navbar.Brand>
           <Navbar.Toggle />
           <Navbar.Collapse className="justify-content-end">
-            <NavDropdown title={username} id="basic-nav-dropdown" style={{ color: "white", display: props.display }}>
+            <NavDropdown title={username} id="basic-nav-dropdown" style={{ color: "white", display: props.display || "none" }}>
               <NavDropdown.Item onClick={() => logout(dispatch)}>{t("Logout")}</NavDropdown.Item>
             </NavDropdown>
-            <NavDropdown title={username} id="basic-nav-dropdown" style={{ color: "white", display: props.displayFull }}>
+            <NavDropdown title={username} id="basic-nav-dropdown1" style={{ color: "white", display: props.displayFull || "none" }}>
               <NavDropdown.Item onClick={() => sendStatsReq(setShowStats, username)}>{t("Stats")}</NavDropdown.Item>
               <NavDropdown.Item onClick={() => setShow(true)}>{t("Language")}</NavDropdown.Item>
               <NavDropdown.Item onClick={() => logout(dispatch)}>{t("Logout")}</NavDropdown.Item>
             </NavDropdown>
-            <NavDropdown title={t("Leave")} id="basic-nav-dropdown2" style={{ color: "white", display: props.inGame }}>
+            <NavDropdown title={t("Settings")} id="basic-nav-dropdown3" style={{ color: "white", display: props.displayLang || "none" }}>
+              <NavDropdown.Item onClick={() => setShow(true)}>{t("Language")}</NavDropdown.Item>
+            </NavDropdown>
+            <NavDropdown title={t("Leave")} id="basic-nav-dropdown2" style={{ color: "white", display: props.inGame || "none" }}>
               <NavDropdown.Item onClick={() => leave(dispatch, props.players, props.username)}>{t("Leave the game")}</NavDropdown.Item>
             </NavDropdown>
           </Navbar.Collapse>
@@ -53,7 +56,7 @@ export default function MyNavbar(props) {
     </>
   )
 
-} 
+}
 
 function sendStatsReq(setShowStats, username) {
 

@@ -328,13 +328,13 @@ export default function VoteRow(props) {
         let greensAlive = players.filter((player) => (player.role !== ROLES[1] && player.role !== EXTRAS[1]) && player.alive === true).length
 
         if (redsAlive === 0) {
-            sendMessage({ "history":"The villagers have won the game!"})
+            sendMessage({ "history": "The villagers have won the game!" })
             dispatch(addHistory("The villagers have won the game!"))
             dispatch(setPhase("goodWon"))
             sendMessage({ "phase": "goodWon" })
             return true
         } else if (greensAlive < redsAlive) { //(greensAlive === 0) {
-            sendMessage({ "history":"The wolves have won the game!"})
+            sendMessage({ "history": "The wolves have won the game!" })
             dispatch(addHistory("The wolves have won the game!"))
             dispatch(setPhase("badWon"))
             sendMessage({ "phase": "badWon" })
@@ -356,7 +356,7 @@ export default function VoteRow(props) {
                             :
                             <img key={"v" + index} className="p-1" src={ale} alt="UserIcon" style={{ width: "20px", filter: FILTERS[(index % FILTERS_NUM)] }} />
                         :
-                        < div key={"v" + index} style={{ display: "none"}} />
+                        < div key={"v" + index} style={{ display: "none" }} />
                 ))}
             </div>
         )

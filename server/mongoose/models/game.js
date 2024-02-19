@@ -20,7 +20,7 @@ const GameSchema = new Schema({
     history: {
         type: Array,
         required: true,
-    } 
+    }
 
 });
 

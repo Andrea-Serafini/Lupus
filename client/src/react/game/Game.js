@@ -35,7 +35,7 @@ function Game() {
 
       return (
          <>
-            <MyNavbar display={"none"} displayFull={"none"} inGame={"none"} />
+            <MyNavbar  />
             <LoadingOverlay active={true} spinner text={t('Assigning roles...')}>
                <div role="main" style={{ height: "300px" }}>
                </div>
@@ -45,7 +45,7 @@ function Game() {
    } else if (gamePhase === "goodWon" || gamePhase === "badWon") {
       return (
          <>
-            <MyNavbar display={"none"} displayFull={"none"} inGame={"none"} />
+            <MyNavbar />
             <div role="main" style={{ height: "300px" }}>
                {gamePhase === "goodWon" ?
                   <>
@@ -55,7 +55,7 @@ function Game() {
                            <h3 style={{ color: "white" }}>{t("Winners: ")}</h3>
                            <div className="" style={{ height: "-webkit-fill-available", overflowY: "scroll", maxHeight: "400px" }}>
                               {players.filter(function (player) { return (player.role !== "Wolf" && player.role !== "Alpha Wolf") }).map((player, index) => (
-                                 
+
                                  <div key={index} className="rounded bg-white mb-2 d-flex align-items-center" style={{ height: "50px" }}>
                                     <div className=" ">
                                        {(player.alive && player.online)
@@ -99,7 +99,7 @@ function Game() {
                            <h3 style={{ color: "white" }}>{t("Winners: ")}</h3>
                            <div className="" style={{ height: "-webkit-fill-available", overflowY: "scroll", maxHeight: "400px" }}>
                               {players.filter(function (player) { return (player.role === "Wolf" || player.role === "Alpha Wolf") }).map((player, index) => (
-                                 
+
                                  <div key={index} className="rounded bg-white mb-2 d-flex align-items-center" style={{ height: "50px" }}>
                                     <div className=" ">
                                        {(player.alive && player.online)
@@ -148,7 +148,7 @@ function Game() {
 
       return (
          <>
-            <MyNavbar display={"none"} displayFull={"none"} inGame={"block"} username={username} players={players} />
+            <MyNavbar inGame={"block"} username={username} players={players} />
 
             <div role="main" >
                <NotificationContainer />

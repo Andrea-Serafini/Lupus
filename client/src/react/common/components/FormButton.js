@@ -2,7 +2,7 @@ import { useSelector } from "react-redux"
 
 import Button from "react-bootstrap/Button"
 
-export default function FormButton(props){
+export default function FormButton(props) {
     let isLoading = useSelector(state => state.util.isLoading)
     return (
         <Button

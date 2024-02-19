@@ -4,7 +4,7 @@ var initialState = {
     socketConnected: false,
     peerConnected: false,
     isLoading: false,
-    cardVisible: false 
+    cardVisible: false
 }
 
 const utilSlice = createSlice({

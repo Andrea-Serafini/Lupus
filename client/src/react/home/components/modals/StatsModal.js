@@ -39,9 +39,9 @@ export default function StatsModal(props) {
                     <h4>    {t("Wins as wolf:")} <span style={{ color: "black" }}>{stats.badWin}</span></h4>
                     <h4>    {t("Wins as villager:")} <span style={{ color: "black" }}>{stats.goodWin}</span></h4>
                     <div className="text-center">
-                    {stats.games.map((game, index) => (
-                        <Button key={index} className="col-3 m-2 position-relative" variant="secondary" onClick={() => handleShow(game.gameCode)}>{t("Show")}</Button>
-                    ))}
+                        {stats.games.map((game, index) => (
+                            <Button key={index} className="col-3 m-2 position-relative" variant="secondary" onClick={() => handleShow(game.gameCode)}>{t("Show")}</Button>
+                        ))}
                     </div>
                     {gameCode === null ?
                         <></>

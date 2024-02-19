@@ -60,8 +60,8 @@ function Lobby() {
    if (room !== null && !peerConnected) {
       return (
          <>
-            <MyNavbar display={"block"} displayFull={"none"} inGame={"none"}/>
-            <LoadingOverlay active={true} spinner text={t('Reloading the lobby')+"..."}>
+            <MyNavbar display={"block"} />
+            <LoadingOverlay active={true} spinner text={t('Reloading the lobby') + "..."}>
                <div role="main" style={{ height: "300px" }}>
                </div>
             </LoadingOverlay>
@@ -72,8 +72,8 @@ function Lobby() {
    } else {
       return (
          <>
-            <MyNavbar display={"block"} displayFull={"none"} inGame={"none"}/>
-            <LoadingOverlay active={isLoading} spinner text={t('Starting the game')+"..."}>
+            <MyNavbar display={"block"} />
+            <LoadingOverlay active={isLoading} spinner text={t('Starting the game') + "..."}>
                <div role="main">
                   <NotificationContainer />
 

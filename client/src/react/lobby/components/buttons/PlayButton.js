@@ -13,7 +13,7 @@ export default function PlayButton(props) {
     const { t } = useTranslation();
     const dispatch = useDispatch();
     return <LobbyButton text={t("Play")} variant="success"
-        onClick={() => playClicked(dispatch, props.wolfNumber, props.extras, props.players,t)} />
+        onClick={() => playClicked(dispatch, props.wolfNumber, props.extras, props.players, t)} />
 }
 
 function playClicked(dispatch, wolfNumber, extras, players, t) {

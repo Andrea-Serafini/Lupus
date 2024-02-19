@@ -1,4 +1,4 @@
-import React from "react";
+import React, { StrictMode } from "react";
 import { createRoot } from 'react-dom/client';
 import './index.css';
 import "bootstrap/dist/css/bootstrap.css";
@@ -49,12 +49,14 @@ root.render(
 
 
 root.render(
-  <Provider store={store}>
-    <React.Fragment>
-      <HashRouter>
-        <LupusRouter />
-      </HashRouter>
-    </React.Fragment>
-  </Provider>
+  <StrictMode>
+    <Provider store={store}>
+      <React.Fragment>
+        <HashRouter>
+          <LupusRouter />
+        </HashRouter>
+      </React.Fragment>
+    </Provider>
+  </StrictMode>
 );
 

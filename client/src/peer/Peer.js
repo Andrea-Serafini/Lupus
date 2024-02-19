@@ -1,6 +1,5 @@
 import { Peer } from 'peerjs';
 import { addHistory, addPlayer, removePlayer, setGameCode, setHistory, setPhase, setPlayers, updatePlayer } from '../redux/game/reducer';
-//import { setWolfNumber, toggleExtras } from '../redux/options/reducer';
 import { setWolfNumber, toggleExtras } from '../redux/game/reducer';
 
 var peerId;

@@ -74,7 +74,7 @@ export default function OptionModal(props) {
                                 <img className="rounded m-auto" src={EXTRAS_ICONS[index + 1]} alt="Icona" style={{ opacity: extra.used ? "100%" : "50%", width: "40px" }} />
                                 <InputGroup className="m-auto " style={{ width: "250px" }}>
                                     <Form.Control
-                                        name={extra.name+"Label"}
+                                        name={extra.name + "Label"}
                                         value={extra.name}
                                         disabled={true}
                                         style={{ textAlign: "center", background: extra.used ? "green" : "gray" }}
