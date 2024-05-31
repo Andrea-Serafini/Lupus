@@ -1,0 +1,19 @@
+\chapter{Requisiti}
+L'obiettivo finale del progetto è quello di creare un applicativo che, basandosi su un'architettura Client-Server ibrida, permetta di ottenere le funzionalità descritte nel capitolo precedente.
+
+\section{Obiettivi}
+Il sistema distribuito si baserà su di un'architettura \emph{peer-to-peer}\cite{p2pWikipedia} con discovery server per la gestione della singola partita, durante la quale tutti i client partecipanti, in maniera mista e trasparente tra Web e Mobile, condivideranno le informazioni di gioco mantenendo così uno stato aggiornato e consistente tra loro, permettendo così al sistema di scalare in base alle necessità.
+
+Il server avrà poi un ruolo più centrale per quanto riguarda la persistenza del sistema, grazie alla realizzazione di un database, occupandosi di salvare credenziali ed informazioni relative agli utenti, oltre che informazioni sui risultati di gioco e statistiche aggregate. Infine verranno sfruttati i \emph{container} per permettere all'utente di effettuare il deployment del sistema in maniera automatizzata ed affidabile. 
+
+\section{Artefatti}
+Al termine dello sviluppo sono attesi i seguenti deliverables:
+
+\begin{itemize}
+    \item Database
+    \item Server
+    \item Client
+\end{itemize}
+
+Le tecnologie che si andranno ad utilizzare per il loro sviluppo sono MongoDB per quanto riguarda il database, Node.js ed in particolare il framework Express per l'implementazione del Server, e per il Client la libreria Javascript React per lo sviluppo della versione Web in combinazione con Bootstrap. Infine verranno utilizzati npm e Docker per quanto riguarda la building automation ed il deployment.
+

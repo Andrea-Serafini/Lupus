@@ -1,0 +1,71 @@
+
+\chapter{Test}
+Successivamente in questo capitolo verranno descritti brevemente gli strumenti utilizzati per effettuare test sul codice sviluppato.\\[\baselineskip]\indent
+Oltre a questi tools sono stati effettuati vari test con utenti durante le diverse fasi di implementazione. Basandosi sul bacino di utenti per il quale è stato pensato il sistema, sono state consultate per questi test persone interne all'università, anche iscritte ad altri corsi e quindi senza uno specifico background informatico.
+Nelle prime fasi sono sono state richieste consulenze riguardo le scelte grafiche, presentando alcuni wireframes, e per quanto riguarda le specifiche a livello di regole di gioco ed usabilità. Successivamente sono stati effettuati test di accessibilità chiedendo di accedere al sistema da dispositivi diversi e testare le funzionalità basilari come registrazione, autenticazione e persistenza delle sessioni. Nelle fasi finali i test sono stati impostati come vere e proprie demo di scenari di utilizzo reali, giocando partite complete toccando tutte le funzionalità implementate.
+\newpage
+
+\section{Redux DevTools}
+Per effettuare i test necessari a verificare che lo stato dell'applicazione fosse correttamente gestito sono stati usati gli strumenti offerti da Redux DevTools \cite{githubGitHubReduxjsreduxdevtools}.
+Questi strumenti per sviluppatori permettono di migliorare il flusso di sviluppo di Redux o qualsiasi altra architettura che gestisca cambiamenti di stato. Può essere utilizzato come estensione per i principali browser, Chrome, Edge e Firefox, come app standalone oppure come componente React integrato nel client.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.9\textwidth]{img/redux_devtools_usage.png}
+\caption{Redux DevTools in uso}
+\label{fig:reduxDevTools}
+\end{figure}
+
+Per lo sviluppo di questo progetto è stata utilizzata l'estensione messa a disposizione per Chrome, come mostrato nell figura \ref{fig:reduxDevTools}, nella quale è possibile vedere lo stato in tempo reale di Redux.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.3\textwidth]{img/logos/redux_devtool.jpg}
+\caption{Redux DevTools logo}
+\label{fig:reduxDevToolsLogo}
+\end{figure}
+
+
+\section{Axe DevTools}
+
+Per testare aspetti di accessibilità sono stati invece utilizzati gli strumenti messi a disposizione da axe DevTools \cite{dequeDevToolsDeveloper}.
+Questi tools permettono, sempre attraverso un'estensione disponibile per il browser Chrome, di analizzare vari aspetti di accessibilità relativi ad una specifica pagina web o ad una sua sottoparte. 
+
+L'utilizzo dei tools è visibile nella figura \ref{fig:axeDevTools}, nella quale si può inoltre osservare la struttura di suddivisione utilizzata per attribuire un livello di gravità al problema riscontrato.
+
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{img/axe_devtools_usage.png}
+\caption{Axe DevTools in uso}
+\label{fig:axeDevTools}
+\end{figure}
+
+Il set di tool di cui ci siamo serviti per monitorare ed eventualmente correggere questioni riguardanti l'accessibilità nel presente applicativo. Axe DevTools è un insieme di strumenti leader del settore, che permette tramite un'estensione installabile direttamente su browser di ispezionare una pagina web o sottoparti di essa allo scopo di individuare problemi di accessibilità. Il tool poi procede con il suddividere i problemi in varie categorie a seconda della gravità dei problemi eventualmente riscontrati:
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.4\textwidth]{img/logos/axeDevtools_logo.png}
+\caption{Axe DevTools logo}
+\label{fig:axeDevToolsLogo}
+\end{figure}
+
+
+\section{Lighthouse}
+Lighthouse è uno strumento automatizzato completamente open-source pensato per migliorare le prestazioni, la qualità e la correttezza delle applicazioni Web \cite{githubLighthouse}.
+
+Durante il controllo di una pagina, questo tool esegue una serie di test sulla pagina e quindi genera un rapporto sul rendimento della pagina, visibile nella figura \ref{fig:lighthouseReport}. Da qui è possibile utilizzare eventuali test falliti come indicatori di quali azioni si possano intraprendere per migliorare la propria applicazione.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{img/lighthouse_usage.png}
+\caption{Lighthouse in uso}
+\label{fig:lighthouseReport}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.3\textwidth]{img/logos/lighthouse_logo.png}
+\caption{Lighthouse logo}
+\label{fig:lighthouseLogo}
+\end{figure}

@@ -1,0 +1,90 @@
+\documentclass{scrartcl}
+\usepackage[utf8]{inputenc}
+\usepackage{url}
+\usepackage{natbib}
+\usepackage{graphicx}
+\usepackage[italian]{babel}
+\usepackage{listings}
+\usepackage[hidelinks]{hyperref}
+\usepackage{float}
+\usepackage{enumitem}
+\usepackage{amsfonts}
+\usepackage{minted}
+\usepackage{xcolor} % to access the named colour LightGray
+\definecolor{LightGray}{gray}{0.9}
+\definecolor{LightBlue}{HTML}{d4e5ed} % using hexadecimal color code
+
+\usepackage{listings}
+\lstset{
+    showstringspaces=false,
+    basicstyle=\ttfamily,
+    keywordstyle=\color{blue},
+    commentstyle=\color[grey]{0.6},
+    stringstyle=\color[RGB]{255,150,75}
+}
+\newcommand{\inlinecode}[2]{\colorbox{LightBlue}{\lstinline[language=#1]$#2$}}
+
+\usepackage{fancyvrb,newverbs}
+\newenvironment{lcverbatim}
+ {\SaveVerbatim{cverb}}
+ {\endSaveVerbatim
+  \flushleft\fboxrule=0pt\fboxsep=.5em
+  \colorbox{LightBlue}{%
+    \makebox[\dimexpr\linewidth-2\fboxsep][l]{\BUseVerbatim{cverb}}%
+  }
+  \endflushleft
+}
+\newcommand{\emailaddr}[1]{\href{mailto:#1}{\texttt{#1}}}
+
+\title{\LARGE
+    Lupus\\
+    Final Report
+}
+
+% Consider watching:
+% https://www.youtube.com/watch?v=ihxSUsJB_14
+% https://www.youtube.com/watch?v=XTFWaV55uDo
+
+\author{
+     Andrea Serafini \\ \emailaddr{andrea.serafini11@studio.unibo.it}
+}
+
+\date{November 2023}
+
+\begin{document}
+\pagenumbering{gobble}
+
+\maketitle
+
+\newpage
+
+\input{chapters/0_abstract}
+
+\newpage
+
+\pagenumbering{Roman} 
+
+\tableofcontents
+\newpage
+
+\listoffigures
+\newpage
+
+\pagenumbering{arabic}
+
+\input{chapters/1_analisi}
+\input{chapters/2_requisiti}\newpage
+\input{chapters/3_design}
+\input{chapters/4_implementazione}
+\input{chapters/5_validazione}
+\input{chapters/6_deployment}
+\input{chapters/7_uso}
+\input{chapters/8_conclusioni}
+
+
+\newpage
+\nocite{*} % Includes all references from the `references.bib` file
+\bibliographystyle{unsrt}
+\bibliography{references}
+
+\end{document}

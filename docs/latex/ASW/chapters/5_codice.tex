@@ -1,0 +1,189 @@
+\chapter{Codice}
+Nel seguente capitolo verranno riportati alcuni estratti del codice implementato per il progetto, con l'obiettivo di evidenziare aspetti affrontati durante lo sviluppo che sono stati ritenuti interessanti.
+
+\section{Server}
+
+\subsection{Routes}
+
+Nell'estratto seguente è possibile vedere come siano definite le rotte all'interno del server. Si dividono in tre gruppi, quelle relative alle informazioni di utenti e partite, definite in file separati, e quella definita per gestire le richieste a \emph{'/'}.
+
+\begin{minted}[bgcolor=LightBlue]{js}
+    app.use(require('./routes/user'));
+    app.use(require('./routes/game'));
+    app.get('/', (req, res) => {
+        res.send('LUPUS' + '<br/>'
+                            + 'Discovery server running');
+    });
+\end{minted}
+
+La struttura del file \emph{./routes/user.js} riportata qui di seguito mostra sinteticamente come il router venga impostato per le richieste \emph{get} e \emph{post} relative agli utenti.
+
+\begin{minted}[bgcolor=LightBlue]{js}
+    const router = express.Router();
+    
+    router.post("/user", (req, res) => {...});
+    
+    router.get("/user/:username", (req, res) => {...});
+    
+    router.get("/users", (req, res) => {...});
+    
+    module.exports = router;
+\end{minted}
+
+\subsection{Socket.IO}
+
+Per quanto riguarda invece la comunicazione attraverso websocket, lato server utilizzando il seguente codice dopo aver inizializzato \emph{io} è possibile andare ad applicare gli handler per i vari messaggi.
+
+\begin{minted}[bgcolor=LightBlue]{js}
+    //On connection assign handlers
+    io.on('connection', (socket) => {
+
+        socket.on('disconnect', () => {...} });
+        socket.on('logout', () => {...} });
+        socket.on('login', (message) => {...} });
+        ...
+    });
+
+\end{minted}
+
+\subsection{Mongoose}
+Gli Schema sul database sono stati creati utilizzando Mongoose, qui di seguito viene riportato lo Schema utilizzato per le informazioni relative agli utenti.
+\begin{minted}[bgcolor=LightBlue]{js}
+    // Create User Schema
+    const UserSchema = new Schema({
+        username: {
+            type: String,
+            required: true,
+            index: { unique: true }},
+        password: {
+            type: String,
+            required: true},
+        goodWins: {
+            type: Number,
+            required: true},
+        badWins: {
+            type: Number,
+            required: true},
+        playedGames: {
+            type: Array,
+            required: true},
+    });
+\end{minted}
+
+Sfruttando i middleware messi a disposizione da Mongoose è stato possibile implementare una versione specifica di \emph{.pre('save', ...)}. All'interno di questo hook si è andati, utilizzando la libreria \emph{bcrypt} \cite{npmjsBcrypt}, a generare e conseguentemente salvare la versione non in chiaro della password grazie all'omonima funzione di hashing \cite{bcryptWikipedia}. 
+
+Subito sotto si trova l'implementazione della funzione \emph{comparePassword}, implementata come metodo aggiuntivo dell'istanza dello UserSchema. Anche questa funzione fa uso della libreria vista in precedenza per confrontare la password inserita dall'utente con quella salvata nel database. 
+
+\begin{minted}[bgcolor=LightBlue]{js}
+    UserSchema.pre("save", function (next) {
+        var user = this;
+        // only hash the password if it has been modified
+        if (!user.isModified('password')) return next();
+    
+        // generate a salt
+        bcrypt.genSalt(SALT_WORK_FACTOR,
+            function (err, salt) {
+                if (err) return next(err);
+        
+                // hash the password using our new salt
+                bcrypt.hash(user.password, salt,
+                    function (err, hash) {
+                        if (err) return next(err);
+            
+                        // override the cleartext password
+                        // with the hashed one
+                        user.password = hash;
+                        next();
+                    });
+            });
+    });
+    
+    UserSchema.methods.comparePassword = 
+        function (candidatePassword, cb) {
+            bcrypt.compare(candidatePassword, this.password,
+                function (err, isMatch) {
+                    if (err) return cb(err);
+                    cb(null, isMatch);
+                });
+        };
+\end{minted}
+
+Per illustrare come è stato utilizzato lo Schema appena descritto viene di seguito riportato un estratto del codice proveniente dalle route mostrate in precedenza. Si può vedere la creazione di una nuova istanza di User, il salvataggio di un'istanza sul database e la query di ricerca utilizzata per ricercare un utente attraverso il suo username.
+
+\begin{minted}[bgcolor=LightBlue]{js}
+    const newUser = new User({
+        username: req.body.username,
+        password: req.body.password,
+        goodWins: 0,
+        badWins: 0,
+        playedGames: []
+    });
+    
+    // Create a new User
+    User.create(newUser)
+        .then(function (dbUser) {
+            res.json(dbUser);
+        })
+        .catch(function (err) {
+            res.json(err);
+        });
+
+    User.findOne({ username: req.params.username })
+        .then(function (dbUser) {
+            res.json(dbUser);
+        })
+        .catch(function (err) {
+            res.json(err);
+        });
+\end{minted}
+
+\section{Client}
+
+\subsection{sessionStorage}
+
+Gli oggetti web storage \emph{sessionStorage} e \emph{localStorage} permetto di salvare le coppie chiave/valore nel browser. La particolarità di questi spazi di memorizzazione è che i dati rimarranno memorizzati anche in seguito al ricaricamento della pagina, nel caso del sessionStorage, e anche in seguito a un riavvio del browser, per il localStorage. Proprio per questo limite il primo viene utilizzato molto meno spesso del secondo poiché, nonostante proprietà e metodi siano gli stessi. Il sessionStorage esiste infatti solo all'intero della tab del browser corrente. Un’altra tab con la stessa pagina avrà un archiviazione differente. I dati sopravvivono all'aggiornamento della pagina, ma non alla sua chiusura e successiva riapertura.
+
+In questa versione del codice è stato scelto di utilizzare il sessionStorage per permettere di mantenere più sessioni attive di utenti diversi all'interno dello stesso browser, sacrificando appunto la persistenza dell'autenticazione alla chiusura del browser.
+
+\begin{minted}[bgcolor=LightBlue]{js}
+    const sessionID = sessionStorage.getItem("sessionID");
+    
+    sessionStorage.setItem("sessionID", sessionID);
+
+    sessionStorage.removeItem("sessionID")
+\end{minted}
+
+\subsection{Redux}
+
+Di seguito è possibile vedere il codice relativo allo stato di Redux per quanto riguarda le informazioni dell'utente, raccolte in un unico slice, con le relative azioni.
+
+\begin{minted}[bgcolor=LightBlue]{js}
+    var initialState = {
+        username: null,
+        room: null,
+        token: null,
+        stats: null
+    }
+    
+    const userSlice = createSlice({
+        name: 'user',
+        initialState,
+        reducers: {
+            setUsername(state, action) {
+                state.username = action.payload
+            },
+            setRoom(state, action) {
+                state.room = action.payload
+            },
+            setToken(state, action) {
+                state.token = action.payload
+            },
+            setStats(state, action) {
+                state.stats = action.payload
+            },
+        },
+    })
+    
+    export const { setUsername, setRoom, setToken, setStats } 
+        = userSlice.actions
+\end{minted}

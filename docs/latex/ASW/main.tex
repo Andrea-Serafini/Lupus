@@ -1,0 +1,82 @@
+\documentclass{report}
+\usepackage[utf8]{inputenc}
+\usepackage{url}
+\usepackage{xcolor}
+\definecolor{LightGray}{gray}{0.9}
+\definecolor{LightBlue}{HTML}{d4e5ed} % using hexadecimal color code
+\usepackage{titlesec}
+\usepackage[hidelinks]{hyperref}
+
+\usepackage{listings}
+\lstset{
+    showstringspaces=false,
+    basicstyle=\ttfamily,
+    keywordstyle=\color{blue},
+    commentstyle=\color[grey]{0.6},
+    stringstyle=\color[RGB]{255,150,75}
+}
+\newcommand{\inlinecode}[2]{\colorbox{LightBlue}{\lstinline[language=#1]$#2$}}
+
+\usepackage{fancyvrb,newverbs}
+\newenvironment{lcverbatim}
+ {\SaveVerbatim{cverb}}
+ {\endSaveVerbatim
+  \flushleft\fboxrule=0pt\fboxsep=.5em
+  \colorbox{LightBlue}{%
+    \makebox[\dimexpr\linewidth-2\fboxsep][l]{\BUseVerbatim{cverb}}%
+  }
+  \endflushleft
+}
+
+\title{
+    Lupus \\
+    \large Applicazioni e Servizi Web
+}
+
+\author{Andrea Serafini - 0000980159\\\{andrea.serafini11@studio.unibo.it\}}
+\date{Febbraio 2024}
+
+\usepackage{natbib}
+\usepackage{graphicx}
+\bibliographystyle{unsrt}
+
+\begin{document}
+
+\maketitle
+
+\pagenumbering{Roman} 
+
+\newpage
+
+\input{chapters/0_abstract}
+\newpage
+
+\tableofcontents
+\newpage
+
+\listoffigures
+\newpage
+
+\pagenumbering{arabic}
+
+\titleformat{\chapter}[display]   
+{\normalfont\huge\bfseries}{\chaptertitlename\ \thechapter}{20pt}{\Huge}   
+\titlespacing*{\chapter}{0pt}{-20pt}{20pt}
+
+\input{chapters/1_introduzione}
+\input{chapters/2_requisiti}
+\input{chapters/3_design}
+\input{chapters/4_tecnologie}
+\input{chapters/5_codice}
+\input{chapters/6_test}
+\input{chapters/7_deployment}
+\input{chapters/8_conclusioni}
+
+\appendix
+\input{chapters/A_desktop}
+\input{chapters/B_mobile}
+
+
+\nocite{*}
+\bibliography{references}
+\end{document}

@@ -1,0 +1,28 @@
+\section{Analisi preliminare}
+
+\subsection{Obiettivi}
+L'obiettivo finale del progetto è quello di creare un applicativo che, basandosi su un'architettura Client-Server ibrida, permetta di facilitare il ruolo di narratore nel gioco descritto in precedenza.
+Le specifiche che seguiranno derivano da un'analisi preliminare del problema e non saranno quindi definitive, ma potranno essere riviste durante la fase di sviluppo.
+
+Il sistema distribuito si baserà su di un'architettura \emph{peer-to-peer} con discovery server per la gestione della singola partita, durante la quale tutti i Client partecipanti, in maniera mista tra Web e Mobile, condivideranno le informazioni di gioco mantenendo così uno stato aggiornato e coerente tra loro.
+Il Server avrà poi un ruolo più centrale per quanto riguarda la persistenza del sistema, grazie alla realizzazione di un database, occupandosi di salvare credenziali e informazioni relative agli utenti, oltre che informazioni sui risultati di gioco ed eventuali statistiche. Infine durante il progetto si andrà a familiarizzare con i \emph{container} di Docker con l'obiettivo di facilitare il deployment del sistema. 
+
+\subsection{Deliverables}
+Al termine dello sviluppo sono attesi i seguenti artefatti:
+\begin{itemize}
+    \item database
+    \item server
+    \item client WEB
+    \item client mobile
+\end{itemize}
+Le tecnologie che si ipotizza di utilizzare per lo sviluppo di questi sono: MongoDB per quanto riguarda il database, Node.js e in particolare il framework Express.js per l'implementazione del Server, e per  il Client la libreria Javascript React per lo sviluppo della versione Web in combinazione con React Native per la versione Mobile. Infine verrà utilizzato Gradle per quanto riguarda la building automation.
+
+\subsection{Work plan}
+Essendo un progetto individuale non sarà possibile parallelizzare le attività, per cui si procederà a uno sviluppo incrementale delle componenti del sistema,  alternando fasi di implementazione e di testing, suddividendo le iterazioni per funzionalità nel seguente modo:
+\begin{itemize}
+    \item sistema di gioco peer-to-peer (web client) con discovery server
+    \item persistenza e storico tramite DB
+    \item (opzionale) mobile client
+\end{itemize}
+
+Prima di avviare la fase di implementazione si svolgerà una fase di analisi approfondita e progettazione del sistema nella quale verranno definite le specifiche di funzionamento dell'applicativo e i suoi requisiti, oltre che ai dettagli dell'architettura stessa.
