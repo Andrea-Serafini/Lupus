@@ -36,20 +36,17 @@ app.get('/', (req, res) => {
     res.send('LUPUS' + '<br/>' + 'Discovery server running');
 });
 
+console.log(process.env.LUPUS_DB_ADDRESS)
 // Configure Mongo
-let db
-if (process.env.DB_ADDRESS === null || process.env.DB_ADDRESS === undefined) {
-    db = "mongodb://localhost/LupusDB";
-} else {
-    db = process.env.DB_ADDRESS;
-}
+let db = process.env.LUPUS_DB_ADDRESS;
+
 // Connect to Mongo with Mongoose
 mongoose.connect(
     db,
     { useNewUrlParser: true }
 )
     .then(() => {
-        const art = process.env.ASCII_ART.replace(/\\n/g, '\n');
+        const art = process.env.LUPUS_ASCII_ART.replace(/\\n/g, '\n');
         console.log(art);
         console.log("LupusDB connected");
         goLive();
@@ -86,8 +83,8 @@ io.use((socket, next) => {
 
 function goLive() {
     //Start server
-    server.listen(process.env.PORT, () => {
-        console.log(`Discovery server running on port ${process.env.PORT}`);
+    server.listen(process.env.LUPUS_SERVER_PORT, () => {
+        console.log(`Discovery server running on port ${process.env.LUPUS_SERVER_PORT}`);
 
     });
 

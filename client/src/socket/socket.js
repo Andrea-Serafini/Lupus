@@ -1,19 +1,19 @@
 import { io } from 'socket.io-client';
-import { SERVER_ADDRESS } from '../util/config';
+import { LUPUS_SERVER_ADDRESS } from '../util/config';
 import { assignHandlers } from './assignHandlers';
 import { setIsLoading, setPeerConnected, setSocketConnected } from '../redux/util/reducer';
 import { setToken, setUsername, setRoom } from "../redux/user/reducer";
 import { destroyPeer } from '../peer/Peer';
 import { setPartyClosed, setPlayers } from '../redux/game/reducer';
 
-export const socket = io(SERVER_ADDRESS, {
+export const socket = io(LUPUS_SERVER_ADDRESS, {
     autoConnect: false,
     reconnection: false
 });
 
 export function connect(dispatch) {
 
-    console.log(SERVER_ADDRESS)
+    console.log(LUPUS_SERVER_ADDRESS)
 
     const sessionID = sessionStorage.getItem("sessionID");
     if (sessionID) {

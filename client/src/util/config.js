@@ -36,8 +36,12 @@ import alphaCardEnBw from "../img/SVG/CARDS/en_bw/LUPO_ALPHA_card_enBW.svg"
 import bodyguardCardEnBw from "../img/SVG/CARDS/en_bw/BODYGUARD_OP_card_enBW.svg"
 import clairvoyantCardEnBw from "../img/SVG/CARDS/en_bw/VEGGENTE_card_enBW.svg"
 
-export const SERVER_ADDRESS = "http://localhost:8080"  // "https://wise-resolved-wasp.ngrok-free.app" 
 
+export const LUPUS_SERVER_ADDRESS_ONLINE = "https://wise-resolved-wasp.ngrok-free.app" 
+export const LUPUS_SERVER_ADDRESS_LOCAL = "http://localhost:"
+export const LUPUS_SERVER_PORT = process.env.REACT_APP_SERVER_PORT || "8080"  
+
+export const LUPUS_SERVER_ADDRESS = process.env.REACT_APP_ONLINE ? LUPUS_SERVER_ADDRESS_ONLINE : LUPUS_SERVER_ADDRESS_LOCAL+LUPUS_SERVER_PORT
 //Login
 export const USERNAME_MIN_LENGTH = 4
 export const PASSWORD_MIN_LENGTH = 8
@@ -95,8 +99,8 @@ if (sessionStorage.getItem("lupusLanguage") == null) {
 export const LANGUAGE = sessionStorage.getItem("lupusLanguage");
 
 //Game
-export const MIN_PLAYERS = 3 //TODO: 8
-export const WOLF_STD_NUM = 1 //TODO: 3
+export const MIN_PLAYERS = 8
+export const WOLF_STD_NUM = 3
 
 export const ROLES = {
     1: "Wolf",
